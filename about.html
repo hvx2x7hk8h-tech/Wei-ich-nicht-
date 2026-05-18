@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us — WORLDLIGHT TOUR</title>
+  <meta name="description" content="WorldLight Tour — A Voice of Hope. Learn about our mission, values, team and global ambassadors."/>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <style>
+    .page-hero { min-height:65vh; display:flex; align-items:flex-end; position:relative; overflow:hidden; padding-bottom:5rem; }
+    .page-hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.28) saturate(1.2); }
+    .page-hero-overlay { position:absolute; inset:0; background:linear-gradient(to top, var(--deep) 0%, transparent 60%), radial-gradient(ellipse 70% 50% at 50% 30%, rgba(10,36,99,.5), transparent); }
+    .page-hero-content { position:relative; z-index:5; padding:0 var(--gutter); width:100%; max-width:1280px; margin:0 auto; }
+    .page-eyebrow { font-family:var(--mono); font-size:.6rem; letter-spacing:.55em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; display:block; }
+    .page-title { font-family:var(--display); font-size:clamp(4rem,9vw,9rem); font-weight:700; line-height:.88; letter-spacing:-.02em; }
+    .page-title em { color:var(--gold); font-style:italic; }
+
+    /* MISSION */
+    .mission { padding:var(--section-pad) 0; background:var(--dark); }
+    .mission-inner { display:grid; grid-template-columns:1fr 1fr; gap:8rem; max-width:1280px; margin:0 auto; padding:0 var(--gutter); align-items:center; }
+    .mission-img-wrap { position:relative; }
+    .mission-img-main { width:100%; aspect-ratio:3/4; object-fit:cover; filter:brightness(.8); }
+    .mission-img-accent { position:absolute; bottom:-3rem; right:-3rem; width:55%; aspect-ratio:1; object-fit:cover; border:4px solid var(--deep); filter:brightness(.85); }
+    .mission-float { position:absolute; top:3rem; left:-3rem; background:rgba(2,9,18,.95); border:1px solid var(--border); backdrop-filter:blur(12px); padding:1.8rem; }
+    .mission-float-num { font-family:var(--display); font-size:3rem; font-weight:700; color:var(--gold); line-height:1; }
+    .mission-float-text { font-family:var(--mono); font-size:.52rem; letter-spacing:.3em; text-transform:uppercase; color:rgba(248,244,238,.35); margin-top:.3rem; }
+    .mission-text h2 { font-family:var(--display); font-size:clamp(2.5rem,5vw,4.5rem); font-weight:700; line-height:1.0; margin-bottom:2rem; }
+    .mission-text h2 em { color:var(--gold); font-style:italic; }
+    .mission-text p { font-size:.95rem; color:var(--muted); line-height:1.95; margin-bottom:1.5rem; }
+
+    /* VALUES */
+    .values-section { padding:var(--section-pad) 0; background:var(--deep); }
+    .values-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1px; max-width:1280px; margin:4rem auto 0; padding:0 var(--gutter); }
+    .value-card { padding:3rem 2.5rem; background:var(--glass); border:1px solid var(--border); position:relative; overflow:hidden; }
+    .value-card::before { content:''; position:absolute; top:0; left:0; bottom:0; width:2px; background:linear-gradient(to bottom, var(--gold), transparent); transform:scaleY(0); transition:transform .5s; transform-origin:top; }
+    .value-card:hover::before { transform:scaleY(1); }
+    .value-icon { font-size:2.5rem; margin-bottom:1.2rem; display:block; }
+    .value-name { font-family:var(--display); font-size:1.8rem; font-weight:700; margin-bottom:.75rem; }
+    .value-desc { font-size:.85rem; color:var(--muted); line-height:1.85; }
+
+    /* TEAM */
+    .team-section { padding:var(--section-pad) 0; background:var(--dark); }
+    .team-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1px; max-width:1280px; margin:4rem auto 0; padding:0 var(--gutter); }
+    .team-card { background:var(--glass); border:1px solid var(--border); overflow:hidden; cursor:none; transition:all .4s; }
+    .team-card:hover { border-color:rgba(201,168,76,.4); transform:translateY(-4px); }
+    .team-img { width:100%; aspect-ratio:1; object-fit:cover; filter:grayscale(.4) brightness(.85); transition:filter .4s; }
+    .team-card:hover .team-img { filter:grayscale(0) brightness(.95); }
+    .team-body { padding:1.5rem 2rem; }
+    .team-name { font-family:var(--display); font-size:1.4rem; font-weight:700; }
+    .team-role { font-family:var(--mono); font-size:.55rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); margin-top:.3rem; }
+    .team-bio { font-size:.78rem; color:var(--muted); margin-top:.75rem; line-height:1.7; }
+
+    /* AMBASSADORS */
+    .ambassadors-section { padding:var(--section-pad) 0; background:var(--deep); }
+    .amb-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:2px; max-width:1280px; margin:4rem auto 0; padding:0 var(--gutter); }
+    .amb-card { padding:2rem 1.5rem; background:var(--glass); border:1px solid var(--border); text-align:center; cursor:none; transition:all .3s; }
+    .amb-card:hover { border-color:rgba(201,168,76,.4); transform:translateY(-3px); }
+    .amb-img { width:80px; height:80px; border-radius:50%; object-fit:cover; margin:0 auto 1rem; display:block; filter:grayscale(.3); border:2px solid var(--border); transition:filter .3s, border-color .3s; }
+    .amb-card:hover .amb-img { filter:grayscale(0); border-color:var(--gold); }
+    .amb-name { font-family:var(--display); font-size:1rem; font-weight:700; }
+    .amb-role { font-family:var(--mono); font-size:.5rem; letter-spacing:.25em; text-transform:uppercase; color:var(--gold); margin-top:.25rem; }
+    .amb-country { font-size:.72rem; color:rgba(248,244,238,.3); margin-top:.2rem; }
+
+    /* PARTNERS EXTENDED */
+    .partners-section { padding:var(--section-pad) 0; background:var(--dark); border-top:1px solid var(--border-soft); }
+    .partners-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:1px; max-width:1100px; margin:3rem auto 0; padding:0 var(--gutter); }
+    .partner-item { padding:1.4rem 2.2rem; background:var(--glass); border:1px solid var(--border-soft); font-family:var(--display); font-size:.95rem; font-weight:600; letter-spacing:.1em; color:rgba(248,244,238,.25); transition:all .3s; cursor:none; }
+    .partner-item:hover { color:rgba(248,244,238,.6); border-color:var(--border); }
+
+    @media(max-width:1024px) { .mission-inner { grid-template-columns:1fr; } .mission-img-wrap { display:none; } }
+    @media(max-width:768px) { .team-grid, .amb-grid { grid-template-columns:repeat(2,1fr); } }
+  </style>
+</head>
+<body>
+<div class="cursor-dot"></div><div class="cursor-circle"></div>
+<div class="noise" aria-hidden="true"></div>
+<div id="scroll-progress"></div>
+<nav class="nav">
+  <a class="nav-logo" href="../index.html">WORLD<span>LIGHT</span></a>
+  <ul class="nav-links">
+    <li><a href="tour.html">Tour</a></li><li><a href="final.html">Final Show</a></li>
+    <li><a href="impact.html">Impact</a></li><li><a href="about.html" style="color:var(--gold)">About</a></li>
+    <li><a href="press.html">Press</a></li><li><a href="donate.html" class="nav-donate">Donate</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-overlay" id="nav-overlay">
+  <a href="tour.html">Tour</a><a href="final.html">Final Show</a>
+  <a href="impact.html">Impact</a><a href="about.html">About</a>
+  <a href="press.html">Press</a><a href="donate.html">Donate</a>
+</div>
+
+<header class="page-hero">
+  <img class="page-hero-img" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1920&q=80&fit=crop" alt="Concert crowd united" fetchpriority="high"/>
+  <div class="page-hero-overlay" aria-hidden="true"></div>
+  <div class="page-hero-content">
+    <span class="page-eyebrow">Who We Are</span>
+    <h1 class="page-title">Our <em>Mission</em></h1>
+  </div>
+</header>
+
+<!-- MISSION -->
+<section class="mission" aria-label="Mission Statement">
+  <div class="mission-inner">
+    <div class="mission-img-wrap reveal-l">
+      <img class="mission-img-main" src="https://images.unsplash.com/photo-1604881991720-f91add269bed?w=700&q=80&fit=crop" alt="Performers on stage"/>
+      <img class="mission-img-accent" src="https://images.unsplash.com/photo-1489710437720-ebb67ec84dd2?w=400&q=75&fit=crop" alt="Child smiling" loading="lazy"/>
+      <div class="mission-float">
+        <p class="mission-float-num">2023</p>
+        <p class="mission-float-text">Founded with Purpose</p>
+      </div>
+    </div>
+    <div class="mission-text reveal-r">
+      <h2>A Movement Born<br/>From <em>Empathy</em></h2>
+      <div class="gold-rule"></div>
+      <p>WorldLight was founded on a simple belief: that music is the only language every human being already speaks. Art transcends borders. A melody crosses oceans. A voice can reach places where no diplomat ever could.</p>
+      <p>We are not a charity event. We are a declaration. A statement to the world that the children who are forgotten by systems and headlines are not forgotten by us.</p>
+      <p>In one year, we travel to six continents. We bring the world's greatest artists to its most forgotten corners. We give children not just aid — but a stage. Not just food — but a future.</p>
+      <p style="font-family:var(--display);font-size:1.3rem;font-style:italic;color:var(--gold-pale);line-height:1.6;margin-top:2rem;">"We don't just want to give children food. We want to give them a future worth living."</p>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section" aria-label="Our Values">
+  <div class="container">
+    <header class="section-header-center">
+      <span class="section-eyebrow reveal">What We Stand For</span>
+      <h2 class="section-title reveal d1">Our <em>Values</em></h2>
+      <div class="gold-rule center reveal d2"></div>
+    </header>
+  </div>
+  <div class="values-grid">
+    <div class="value-card reveal"><span class="value-icon">🌟</span><h3 class="value-name">Hope</h3><p class="value-desc">We believe every child, regardless of where they were born or what they have endured, deserves a future filled with possibility, dignity and joy.</p></div>
+    <div class="value-card reveal d1"><span class="value-icon">🌍</span><h3 class="value-name">Unity</h3><p class="value-desc">We erase borders through shared humanity and art. Music does not ask for a passport. Neither do we.</p></div>
+    <div class="value-card reveal d2"><span class="value-icon">🔍</span><h3 class="value-name">Transparency</h3><p class="value-desc">Every dollar spent and every life reached is publicly documented. We publish full financial reports every quarter. Trust is earned, not assumed.</p></div>
+    <div class="value-card reveal d3"><span class="value-icon">⚡</span><h3 class="value-name">Action</h3><p class="value-desc">We don't just raise awareness. We fund schools, build safe spaces, put instruments in hands, and create lasting infrastructure for communities.</p></div>
+    <div class="value-card reveal"><span class="value-icon">♫</span><h3 class="value-name">Joy</h3><p class="value-desc">Because music heals what words cannot. Because a child's laugh is the most important sound in the world. Joy is not a luxury — it is a human right.</p></div>
+    <div class="value-card reveal d1"><span class="value-icon">🤝</span><h3 class="value-name">Partnership</h3><p class="value-desc">We work alongside 190 NGO partners, governments, artists and communities — never imposing, always listening, always learning.</p></div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-section" aria-label="Our Team">
+  <div class="container">
+    <header class="section-header-center">
+      <span class="section-eyebrow reveal">The People Behind the Mission</span>
+      <h2 class="section-title reveal d1">Our <em>Team</em></h2>
+      <div class="gold-rule center reveal d2"></div>
+    </header>
+  </div>
+  <div class="team-grid">
+    <div class="team-card reveal">
+      <img class="team-img" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=75&fit=crop" alt="CEO" loading="lazy"/>
+      <div class="team-body">
+        <p class="team-name">Elena Vasquez</p>
+        <p class="team-role">Founder &amp; CEO</p>
+        <p class="team-bio">Former UN Special Envoy for Children. 20 years in humanitarian work across 60 countries. Named among Time's 100 Most Influential People 2024.</p>
+      </div>
+    </div>
+    <div class="team-card reveal d1">
+      <img class="team-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=75&fit=crop" alt="COO" loading="lazy"/>
+      <div class="team-body">
+        <p class="team-name">Kenji Nakamura</p>
+        <p class="team-role">Chief Operations Officer</p>
+        <p class="team-bio">Previously produced tours for three of the world's highest-grossing acts. Expert in large-scale event logistics across six continents.</p>
+      </div>
+    </div>
+    <div class="team-card reveal d2">
+      <img class="team-img" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=75&fit=crop" alt="Creative Director" loading="lazy"/>
+      <div class="team-body">
+        <p class="team-name">Léa Moreau</p>
+        <p class="team-role">Creative Director</p>
+        <p class="team-bio">Award-winning stage designer. Designed visual concepts for Olympic Opening Ceremonies and three world tours. Driven by the belief art changes politics.</p>
+      </div>
+    </div>
+    <div class="team-card reveal d3">
+      <img class="team-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=75&fit=crop" alt="Head of Impact" loading="lazy"/>
+      <div class="team-body">
+        <p class="team-name">Marcus Webb</p>
+        <p class="team-role">Head of Global Impact</p>
+        <p class="team-bio">Former Save the Children Director for West Africa. Specialist in community-led arts therapy and youth empowerment in post-conflict zones.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AMBASSADORS -->
+<section class="ambassadors-section" aria-label="Global Ambassadors">
+  <div class="container">
+    <header class="section-header-center">
+      <span class="section-eyebrow reveal">Voices of Change</span>
+      <h2 class="section-title reveal d1">Global <em>Ambassadors</em></h2>
+      <div class="gold-rule center reveal d2"></div>
+      <p class="section-sub reveal d3">Artists, activists, athletes and leaders who have pledged their platform to the WorldLight mission.</p>
+    </header>
+  </div>
+  <div class="amb-grid">
+    <div class="amb-card reveal"><img class="amb-img" src="https://images.unsplash.com/photo-1516726817505-f5ed825624d8?w=200&q=70&fit=crop&crop=face" alt="Ambassador" loading="lazy"/><p class="amb-name">Aria Sol</p><p class="amb-role">Artist Ambassador</p><p class="amb-country">Spain</p></div>
+    <div class="amb-card reveal d1"><img class="amb-img" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&q=70&fit=crop&crop=face" alt="Ambassador" loading="lazy"/><p class="amb-name">Zara Okonkwo</p><p class="amb-role">Youth Voice</p><p class="amb-country">Nigeria</p></div>
+    <div class="amb-card reveal d2"><img class="amb-img" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=70&fit=crop&crop=face" alt="Ambassador" loading="lazy"/><p class="amb-name">Priya Sharma</p><p class="amb-role">Activist</p><p class="amb-country">India</p></div>
+    <div class="amb-card reveal d3"><img class="amb-img" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=200&q=70&fit=crop&crop=face" alt="Ambassador" loading="lazy"/><p class="amb-name">Emil Bergström</p><p class="amb-role">Athlete</p><p class="amb-country">Sweden</p></div>
+    <div class="amb-card reveal"><img class="amb-img" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=70&fit=crop&crop=face" alt="Ambassador" loading="lazy"/><p class="amb-name">Léa Moreau</p><p class="amb-role">Artist</p><p class="amb-country">France</p></div>
+    <div class="amb-card reveal d1"><img class="amb-img" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=70&fit=crop&crop=face" alt="Ambassador" loading="lazy"/><p class="amb-name">Carlos Vega</p><p class="amb-role">Musician</p><p class="amb-country">Mexico</p></div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="partners-section" aria-label="Partner Organizations">
+  <div class="container">
+    <header class="section-header-center">
+      <span class="section-eyebrow reveal">Partners &amp; Supporters</span>
+      <h2 class="section-title reveal d1">Together We Are <em>Stronger</em></h2>
+      <div class="gold-rule center reveal d2"></div>
+    </header>
+  </div>
+  <div class="partners-grid">
+    <div class="partner-item reveal">UNICEF</div>
+    <div class="partner-item reveal d1">UNESCO</div>
+    <div class="partner-item reveal d2">Save the Children</div>
+    <div class="partner-item reveal d3">Red Cross</div>
+    <div class="partner-item reveal">UNHCR</div>
+    <div class="partner-item reveal d1">MSF</div>
+    <div class="partner-item reveal d2">World Bank</div>
+    <div class="partner-item reveal d3">Global Fund</div>
+    <div class="partner-item reveal">Gates Foundation</div>
+    <div class="partner-item reveal d1">Amnesty International</div>
+    <div class="partner-item reveal d2">Human Rights Watch</div>
+    <div class="partner-item reveal d3">War Child</div>
+  </div>
+</section>
+
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <div><p class="footer-brand-name">WORLDLIGHT TOUR</p><p class="footer-brand-desc">The world's greatest humanitarian music movement.</p></div>
+    <div><p class="footer-col-label">Tour</p><ul class="footer-nav"><li><a href="tour.html">All Dates</a></li><li><a href="final.html">Final Show</a></li></ul></div>
+    <div><p class="footer-col-label">Org</p><ul class="footer-nav"><li><a href="impact.html">Impact</a></li><li><a href="donate.html">Donate</a></li></ul></div>
+    <div><p class="footer-col-label">Legal</p><ul class="footer-nav"><li><a href="legal.html">Privacy</a></li><li><a href="legal.html">Terms</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p class="footer-copy">© 2025 WorldLight Tour. All rights reserved.</p></div>
+</footer>
+<script src="../js/main.js"></script>
+</body>
+</html>

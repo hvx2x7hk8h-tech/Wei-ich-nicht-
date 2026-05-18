@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tour Dates — WORLDLIGHT TOUR</title>
+  <meta name="description" content="WorldLight Tour dates across 48 cities on 6 continents. Find tickets for your city."/>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <style>
+    .page-hero {
+      min-height: 60vh; display:flex; align-items:flex-end;
+      position:relative; overflow:hidden; padding-bottom: 5rem;
+    }
+    .page-hero-img {
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; filter:brightness(.3) saturate(1.1);
+    }
+    .page-hero-overlay {
+      position:absolute; inset:0;
+      background: linear-gradient(to top, var(--deep) 0%, transparent 60%),
+                  radial-gradient(ellipse 80% 60% at 50% 30%, rgba(10,36,99,.5), transparent);
+    }
+    .page-hero-content {
+      position:relative; z-index:5;
+      padding: 0 var(--gutter); width:100%;
+      max-width: 1280px; margin: 0 auto;
+    }
+    .page-eyebrow {
+      font-family: var(--mono); font-size:.6rem; letter-spacing:.55em;
+      text-transform:uppercase; color:var(--gold); margin-bottom:1rem; display:block;
+    }
+    .page-title {
+      font-family: var(--display); font-size:clamp(4rem,9vw,9rem);
+      font-weight:700; line-height:.88; letter-spacing:-.02em;
+    }
+    .page-title em { color:var(--gold); font-style:italic; }
+
+    /* FILTER BAR */
+    .filter-bar {
+      background:rgba(6,14,34,.95); border-bottom:1px solid var(--border);
+      backdrop-filter:blur(16px); position:sticky; top:72px; z-index:100;
+      padding: 1rem var(--gutter);
+    }
+    .filter-inner {
+      max-width:1280px; margin:0 auto;
+      display:flex; gap:1rem; flex-wrap:wrap; align-items:center;
+    }
+    .filter-btn {
+      padding:.5rem 1.2rem; border:1px solid var(--border);
+      background:transparent; color:var(--muted);
+      font-family:var(--mono); font-size:.58rem; letter-spacing:.25em;
+      text-transform:uppercase; cursor:none; transition:all .3s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color:var(--gold); color:var(--gold); background:var(--glass-gold);
+    }
+    .filter-label {
+      font-family:var(--mono); font-size:.55rem; letter-spacing:.35em;
+      text-transform:uppercase; color:rgba(248,244,238,.25); margin-right:.5rem;
+    }
+
+    /* TIMELINE */
+    .timeline {
+      max-width:1280px; margin:0 auto; padding:6rem var(--gutter);
+    }
+    .timeline-continent {
+      margin-bottom:5rem;
+    }
+    .continent-header {
+      display:flex; align-items:center; gap:2rem; margin-bottom:3rem;
+      padding-bottom:1.5rem; border-bottom:1px solid var(--border);
+    }
+    .continent-name {
+      font-family:var(--display); font-size:clamp(2rem,4vw,3.5rem);
+      font-weight:700; color:var(--white);
+    }
+    .continent-count {
+      font-family:var(--mono); font-size:.58rem; letter-spacing:.35em;
+      text-transform:uppercase; color:var(--gold);
+      background:var(--glass-gold); border:1px solid rgba(201,168,76,.3);
+      padding:.3rem .8rem;
+    }
+    .continent-img {
+      width:100%; height:280px; object-fit:cover;
+      filter:brightness(.55) saturate(1.1);
+      margin-bottom:3rem; display:block;
+    }
+    .shows-grid {
+      display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+      gap:1px;
+    }
+    .show-card {
+      background:var(--glass); border:1px solid var(--border);
+      padding:2rem; position:relative; overflow:hidden;
+      transition:all .4s; cursor:none;
+    }
+    .show-card::before {
+      content:''; position:absolute; left:0; top:0; bottom:0; width:2px;
+      background:linear-gradient(to bottom, var(--gold), transparent);
+      transform:scaleY(0); transition:transform .4s; transform-origin:top;
+    }
+    .show-card:hover { border-color:rgba(201,168,76,.4); transform:translateX(4px); }
+    .show-card:hover::before { transform:scaleY(1); }
+    .show-num {
+      font-family:var(--mono); font-size:.55rem; letter-spacing:.3em;
+      color:rgba(248,244,238,.2); margin-bottom:.8rem;
+    }
+    .show-date {
+      font-family:var(--mono); font-size:.65rem; letter-spacing:.2em;
+      color:var(--gold); margin-bottom:.5rem;
+    }
+    .show-city {
+      font-family:var(--display); font-size:2rem; font-weight:700; line-height:1;
+    }
+    .show-country { font-size:.75rem; color:var(--muted); margin-top:.2rem; }
+    .show-venue { font-size:.8rem; color:rgba(248,244,238,.4); margin-top:.8rem; }
+    .show-actions { display:flex; gap:.75rem; margin-top:1.5rem; flex-wrap:wrap; }
+    .show-ticket-btn {
+      padding:.5rem 1.2rem; border:1px solid;
+      font-family:var(--mono); font-size:.55rem; letter-spacing:.2em;
+      text-transform:uppercase; cursor:none; transition:all .3s; text-decoration:none;
+    }
+    .ticket-avail { border-color:rgba(201,168,76,.4); color:var(--gold); background:var(--glass-gold); }
+    .ticket-avail:hover { background:var(--gold); color:var(--deep); }
+    .ticket-sold { border-color:rgba(255,80,80,.3); color:#ff8080; background:rgba(255,80,80,.08); }
+    .ticket-soon { border-color:rgba(79,195,247,.3); color:var(--neon-sky); background:rgba(79,195,247,.08); }
+
+    /* VIP BANNER */
+    .vip-banner {
+      background: linear-gradient(135deg, rgba(201,168,76,.12), rgba(10,36,99,.3));
+      border:1px solid var(--border); padding:4rem var(--gutter);
+      text-align:center; margin:0 auto 6rem; max-width:1280px;
+      position:relative; overflow:hidden;
+    }
+    .vip-banner::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:1px;
+      background:linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+    .vip-title { font-family:var(--display); font-size:clamp(2rem,4vw,3.5rem); font-weight:700; }
+    .vip-title em { color:var(--gold); font-style:italic; }
+
+    @media(max-width:768px) {
+      .shows-grid { grid-template-columns:1fr; }
+      .continent-img { height:180px; }
+    }
+  </style>
+</head>
+<body>
+<div class="cursor-dot"></div>
+<div class="cursor-circle"></div>
+<div class="noise" aria-hidden="true"></div>
+<div id="scroll-progress"></div>
+
+<nav class="nav" role="navigation">
+  <a class="nav-logo" href="../index.html">WORLD<span>LIGHT</span></a>
+  <ul class="nav-links">
+    <li><a href="tour.html" style="color:var(--gold)">Tour</a></li>
+    <li><a href="final.html">Final Show</a></li>
+    <li><a href="impact.html">Impact</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="press.html">Press</a></li>
+    <li><a href="donate.html" class="nav-donate">Donate</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-overlay" id="nav-overlay">
+  <a href="tour.html">Tour</a><a href="final.html">Final Show</a>
+  <a href="impact.html">Impact</a><a href="about.html">About</a>
+  <a href="press.html">Press</a><a href="donate.html">Donate</a>
+</div>
+
+<!-- PAGE HERO -->
+<header class="page-hero">
+  <img class="page-hero-img"
+    src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1920&q=80&fit=crop"
+    alt="Aerial view of stadium concert" fetchpriority="high"/>
+  <div class="page-hero-overlay" aria-hidden="true"></div>
+  <div class="page-hero-content">
+    <span class="page-eyebrow">2025 — 2026 · 6 Continents · 48 Cities</span>
+    <h1 class="page-title">The Global<br/><em>Tour</em></h1>
+  </div>
+</header>
+
+<!-- FILTER BAR -->
+<div class="filter-bar" role="navigation" aria-label="Filter by continent">
+  <div class="filter-inner">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-btn active" onclick="filterContinent('all', this)">All</button>
+    <button class="filter-btn" onclick="filterContinent('europe', this)">Europe</button>
+    <button class="filter-btn" onclick="filterContinent('namerica', this)">N. America</button>
+    <button class="filter-btn" onclick="filterContinent('samerica', this)">S. America</button>
+    <button class="filter-btn" onclick="filterContinent('africa', this)">Africa</button>
+    <button class="filter-btn" onclick="filterContinent('asia', this)">Asia</button>
+    <button class="filter-btn" onclick="filterContinent('oceania', this)">Oceania</button>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<main class="timeline">
+
+  <!-- EUROPE -->
+  <div class="timeline-continent reveal" data-continent="europe">
+    <img class="continent-img"
+      src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=1400&q=70&fit=crop"
+      alt="European city panorama" loading="lazy"/>
+    <div class="continent-header">
+      <h2 class="continent-name">Europe</h2>
+      <span class="continent-count">12 Shows</span>
+    </div>
+    <div class="shows-grid">
+      <div class="show-card"><p class="show-num">01/48</p><p class="show-date">MARCH 15, 2025</p><h3 class="show-city">Berlin</h3><p class="show-country">Germany</p><p class="show-venue">Olympiastadion Berlin · 74,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-sold" href="#">Sold Out</a></div></div>
+      <div class="show-card"><p class="show-num">02/48</p><p class="show-date">MARCH 22, 2025</p><h3 class="show-city">Paris</h3><p class="show-country">France</p><p class="show-venue">Stade de France · 81,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-avail" href="#">Buy Tickets</a></div></div>
+      <div class="show-card"><p class="show-num">03/48</p><p class="show-date">MARCH 29, 2025</p><h3 class="show-city">London</h3><p class="show-country">United Kingdom</p><p class="show-venue">Wembley Stadium · 90,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-sold" href="#">Sold Out</a></div></div>
+      <div class="show-card"><p class="show-num">04/48</p><p class="show-date">APRIL 5, 2025</p><h3 class="show-city">Rome</h3><p class="show-country">Italy</p><p class="show-venue">Stadio Olimpico · 70,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-avail" href="#">Buy Tickets</a></div></div>
+      <div class="show-card"><p class="show-num">05/48</p><p class="show-date">APRIL 12, 2025</p><h3 class="show-city">Madrid</h3><p class="show-country">Spain</p><p class="show-venue">Estadio Santiago Bernabéu · 81,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-avail" href="#">Buy Tickets</a></div></div>
+      <div class="show-card"><p class="show-num">06/48</p><p class="show-date">APRIL 19, 2025</p><h3 class="show-city">Amsterdam</h3><p class="show-country">Netherlands</p><p class="show-venue">Johan Cruyff Arena · 55,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-avail" href="#">Buy Tickets</a></div></div>
+    </div>
+  </div>
+
+  <!-- NORTH AMERICA -->
+  <div class="timeline-continent reveal" data-continent="namerica">
+    <img class="continent-img"
+      src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1400&q=70&fit=crop"
+      alt="New York City skyline at night" loading="lazy"/>
+    <div class="continent-header">
+      <h2 class="continent-name">North America</h2>
+      <span class="continent-count">10 Shows</span>
+    </div>
+    <div class="shows-grid">
+      <div class="show-card"><p class="show-num">13/48</p><p class="show-date">MAY 10, 2025</p><h3 class="show-city">New York</h3><p class="show-country">USA</p><p class="show-venue">MetLife Stadium · 82,500 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-avail" href="#">Buy Tickets</a></div></div>
+      <div class="show-card"><p class="show-num">14/48</p><p class="show-date">MAY 17, 2025</p><h3 class="show-city">Los Angeles</h3><p class="show-country">USA</p><p class="show-venue">SoFi Stadium · 70,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-avail" href="#">Buy Tickets</a></div></div>
+      <div class="show-card"><p class="show-num">15/48</p><p class="show-date">MAY 24, 2025</p><h3 class="show-city">Toronto</h3><p class="show-country">Canada</p><p class="show-venue">Rogers Centre · 53,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-avail" href="#">Buy Tickets</a></div></div>
+      <div class="show-card"><p class="show-num">16/48</p><p class="show-date">JUNE 1, 2025</p><h3 class="show-city">Chicago</h3><p class="show-country">USA</p><p class="show-venue">Soldier Field · 61,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-soon" href="#">Coming Soon</a></div></div>
+      <div class="show-card"><p class="show-num">17/48</p><p class="show-date">JUNE 7, 2025</p><h3 class="show-city">Mexico City</h3><p class="show-country">Mexico</p><p class="show-venue">Estadio Azteca · 87,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-soon" href="#">Coming Soon</a></div></div>
+    </div>
+  </div>
+
+  <!-- SOUTH AMERICA -->
+  <div class="timeline-continent reveal" data-continent="samerica">
+    <img class="continent-img"
+      src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=1400&q=70&fit=crop"
+      alt="South America aerial view" loading="lazy"/>
+    <div class="continent-header">
+      <h2 class="continent-name">South America</h2>
+      <span class="continent-count">6 Shows</span>
+    </div>
+    <div class="shows-grid">
+      <div class="show-card"><p class="show-num">23/48</p><p class="show-date">JULY 5, 2025</p><h3 class="show-city">São Paulo</h3><p class="show-country">Brazil</p><p class="show-venue">Estádio do Morumbi · 67,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-avail" href="#">Buy Tickets</a></div></div>
+      <div class="show-card"><p class="show-num">24/48</p><p class="show-date">JULY 12, 2025</p><h3 class="show-city">Rio de Janeiro</h3><p class="show-country">Brazil</p><p class="show-venue">Estádio do Maracanã · 78,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-soon" href="#">Coming Soon</a></div></div>
+      <div class="show-card"><p class="show-num">25/48</p><p class="show-date">JULY 19, 2025</p><h3 class="show-city">Buenos Aires</h3><p class="show-country">Argentina</p><p class="show-venue">El Monumental · 84,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-soon" href="#">Coming Soon</a></div></div>
+      <div class="show-card"><p class="show-num">26/48</p><p class="show-date">JULY 26, 2025</p><h3 class="show-city">Bogotá</h3><p class="show-country">Colombia</p><p class="show-venue">Estadio El Campín · 42,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-soon" href="#">Coming Soon</a></div></div>
+    </div>
+  </div>
+
+  <!-- AFRICA -->
+  <div class="timeline-continent reveal" data-continent="africa">
+    <img class="continent-img"
+      src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=1400&q=70&fit=crop"
+      alt="African savanna and community" loading="lazy"/>
+    <div class="continent-header">
+      <h2 class="continent-name">Africa</h2>
+      <span class="continent-count">8 Shows</span>
+    </div>
+    <div class="shows-grid">
+      <div class="show-card"><p class="show-num">29/48</p><p class="show-date">AUG 9, 2025</p><h3 class="show-city">Lagos</h3><p class="show-country">Nigeria</p><p class="show-venue">Teslim Balogun Stadium · 24,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-avail" href="#">Buy Tickets</a></div></div>
+      <div class="show-card"><p class="show-num">30/48</p><p class="show-date">AUG 16, 2025</p><h3 class="show-city">Nairobi</h3><p class="show-country">Kenya</p><p class="show-venue">Moi International Sports Centre · 60,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-avail" href="#">Buy Tickets</a></div></div>
+      <div class="show-card"><p class="show-num">31/48</p><p class="show-date">AUG 23, 2025</p><h3 class="show-city">Cape Town</h3><p class="show-country">South Africa</p><p class="show-venue">DHL Newlands · 51,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-soon" href="#">Coming Soon</a></div></div>
+      <div class="show-card"><p class="show-num">32/48</p><p class="show-date">AUG 30, 2025</p><h3 class="show-city">Accra</h3><p class="show-country">Ghana</p><p class="show-venue">Accra Sports Stadium · 40,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-soon" href="#">Coming Soon</a></div></div>
+    </div>
+  </div>
+
+  <!-- ASIA -->
+  <div class="timeline-continent reveal" data-continent="asia">
+    <img class="continent-img"
+      src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1400&q=70&fit=crop"
+      alt="Asian city skyline at night" loading="lazy"/>
+    <div class="continent-header">
+      <h2 class="continent-name">Asia</h2>
+      <span class="continent-count">8 Shows</span>
+    </div>
+    <div class="shows-grid">
+      <div class="show-card"><p class="show-num">37/48</p><p class="show-date">SEP 20, 2025</p><h3 class="show-city">Tokyo</h3><p class="show-country">Japan</p><p class="show-venue">Japan National Stadium · 68,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-soon" href="#">Coming Soon</a></div></div>
+      <div class="show-card"><p class="show-num">38/48</p><p class="show-date">SEP 27, 2025</p><h3 class="show-city">Seoul</h3><p class="show-country">South Korea</p><p class="show-venue">Seoul World Cup Stadium · 66,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-soon" href="#">Coming Soon</a></div></div>
+      <div class="show-card"><p class="show-num">39/48</p><p class="show-date">OCT 4, 2025</p><h3 class="show-city">Beijing</h3><p class="show-country">China</p><p class="show-venue">National Stadium · 91,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-soon" href="#">Coming Soon</a></div></div>
+      <div class="show-card"><p class="show-num">40/48</p><p class="show-date">OCT 11, 2025</p><h3 class="show-city">Mumbai</h3><p class="show-country">India</p><p class="show-venue">DY Patil Stadium · 55,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-soon" href="#">Coming Soon</a></div></div>
+      <div class="show-card"><p class="show-num">41/48</p><p class="show-date">OCT 18, 2025</p><h3 class="show-city">Dubai</h3><p class="show-country">UAE</p><p class="show-venue">Expo City Arena · 60,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-soon" href="#">Coming Soon</a></div></div>
+    </div>
+  </div>
+
+  <!-- OCEANIA -->
+  <div class="timeline-continent reveal" data-continent="oceania">
+    <img class="continent-img"
+      src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1400&q=70&fit=crop"
+      alt="Sydney Harbour at sunrise" loading="lazy"/>
+    <div class="continent-header">
+      <h2 class="continent-name">Oceania</h2>
+      <span class="continent-count">4 Shows</span>
+    </div>
+    <div class="shows-grid">
+      <div class="show-card"><p class="show-num">45/48</p><p class="show-date">NOV 15, 2025</p><h3 class="show-city">Sydney</h3><p class="show-country">Australia</p><p class="show-venue">Stadium Australia · 83,500 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-soon" href="#">Coming Soon</a></div></div>
+      <div class="show-card"><p class="show-num">46/48</p><p class="show-date">NOV 22, 2025</p><h3 class="show-city">Melbourne</h3><p class="show-country">Australia</p><p class="show-venue">MCG · 100,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-soon" href="#">Coming Soon</a></div></div>
+      <div class="show-card"><p class="show-num">47/48</p><p class="show-date">NOV 29, 2025</p><h3 class="show-city">Auckland</h3><p class="show-country">New Zealand</p><p class="show-venue">Eden Park · 50,000 seats</p><div class="show-actions"><a class="show-ticket-btn ticket-soon" href="#">Coming Soon</a></div></div>
+    </div>
+  </div>
+
+  <!-- VIP BANNER -->
+  <div class="vip-banner reveal">
+    <span class="page-eyebrow" style="justify-content:center;display:flex;">Exclusive Experience</span>
+    <h2 class="vip-title">WorldLight <em>VIP Packages</em></h2>
+    <p style="font-size:.95rem;color:var(--muted);max-width:600px;margin:1.5rem auto 2.5rem;line-height:1.9;">
+      Backstage access, meet &amp; greet with artists, premium seating, champagne reception, exclusive merchandise, and a private charity dinner.
+    </p>
+    <a href="donate.html" class="btn btn-gold">Enquire About VIP →</a>
+  </div>
+
+</main>
+
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <div><p class="footer-brand-name">WORLDLIGHT TOUR</p><p class="footer-brand-desc">The world's greatest humanitarian music and culture movement.</p></div>
+    <div><p class="footer-col-label">Tour</p><ul class="footer-nav"><li><a href="tour.html">All Dates</a></li><li><a href="final.html">Final Show</a></li><li><a href="donate.html">VIP Packages</a></li></ul></div>
+    <div><p class="footer-col-label">Org</p><ul class="footer-nav"><li><a href="about.html">About</a></li><li><a href="impact.html">Impact</a></li><li><a href="donate.html">Donate</a></li></ul></div>
+    <div><p class="footer-col-label">Legal</p><ul class="footer-nav"><li><a href="legal.html">Privacy</a></li><li><a href="legal.html">Terms</a></li><li><a href="legal.html">Imprint</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p class="footer-copy">© 2025 WorldLight Tour. All rights reserved.</p></div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+  function filterContinent(c, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.timeline-continent').forEach(el => {
+      el.style.display = (c === 'all' || el.dataset.continent === c) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

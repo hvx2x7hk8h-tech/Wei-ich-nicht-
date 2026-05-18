@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Grand Finale — WORLDLIGHT TOUR</title>
+  <meta name="description" content="December 31, 2025 — The greatest night on Earth. WorldLight Grand Finale with global livestream, world stars, orchestra and charity gala."/>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <style>
+    /* CINEMATIC HERO */
+    .finale-hero {
+      min-height:100vh; position:relative;
+      display:flex; align-items:center; justify-content:center; overflow:hidden;
+    }
+    .finale-hero-img {
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; filter:brightness(.28) saturate(1.4);
+    }
+    .finale-hero-overlay {
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 35%, rgba(201,168,76,.25) 0%, transparent 55%),
+        radial-gradient(ellipse 100% 80% at 50% 100%, var(--deep) 0%, transparent 60%);
+    }
+    .finale-content {
+      position:relative; z-index:5; text-align:center;
+      padding: 8rem var(--gutter) 6rem; max-width:1000px;
+    }
+    .finale-date-chip {
+      display:inline-block;
+      background:rgba(201,168,76,.12); border:1px solid rgba(201,168,76,.45);
+      color:var(--gold); font-family:var(--mono); font-size:.58rem;
+      letter-spacing:.5em; text-transform:uppercase; padding:.55rem 1.8rem;
+      margin-bottom:3rem;
+      opacity:0; animation:fadeUp .9s .5s forwards;
+    }
+    .finale-title {
+      font-family:var(--display);
+      font-size:clamp(4.5rem, 12vw, 12rem);
+      font-weight:700; line-height:.85; letter-spacing:-.025em;
+      opacity:0; animation:fadeUp 1.1s .8s forwards;
+    }
+    .finale-title span { display:block; }
+    .finale-title em { color:var(--gold); font-style:italic; text-shadow:var(--glow-gold); }
+    .finale-sub {
+      font-size:clamp(.9rem,1.5vw,1.1rem); color:rgba(248,244,238,.5);
+      letter-spacing:.12em; text-transform:uppercase; margin-top:2rem;
+      opacity:0; animation:fadeUp .9s 1.1s forwards;
+    }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+    /* SCROLL SECTIONS */
+    .finale-features {
+      padding: var(--section-pad) 0; background:var(--dark);
+    }
+    .features-grid {
+      display:grid; grid-template-columns:repeat(auto-fill, minmax(300px,1fr));
+      gap:1px; max-width:1280px; margin:4rem auto 0; padding:0 var(--gutter);
+    }
+    .feature-cell {
+      padding:3rem 2.5rem; background:var(--glass); border:1px solid var(--border);
+      position:relative; overflow:hidden;
+    }
+    .feature-cell::after {
+      content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+      background:linear-gradient(to right,transparent,var(--gold),transparent);
+      transform:scaleX(0); transition:transform .5s;
+    }
+    .feature-cell:hover::after { transform:scaleX(1); }
+    .feature-icon { font-size:2rem; margin-bottom:1.2rem; display:block; }
+    .feature-title {
+      font-family:var(--display); font-size:1.5rem; font-weight:700; margin-bottom:.75rem;
+    }
+    .feature-desc { font-size:.85rem; color:var(--muted); line-height:1.85; }
+
+    /* PACKAGES */
+    .packages {
+      padding: var(--section-pad) 0; background:var(--deep);
+      position:relative; overflow:hidden;
+    }
+    .packages::before {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201,168,76,.05), transparent);
+    }
+    .packages-grid {
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+      gap:1px; max-width:1200px; margin:4rem auto 0; padding:0 var(--gutter);
+    }
+    .package-card {
+      background:var(--glass); border:1px solid var(--border);
+      padding:3rem 2.5rem; position:relative; overflow:hidden; cursor:none;
+      transition:all .4s;
+    }
+    .package-card.featured {
+      border-color:rgba(201,168,76,.5);
+      background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(10,36,99,.2));
+    }
+    .package-card.featured::before {
+      content:'MOST POPULAR';
+      position:absolute; top:1.2rem; right:1.5rem;
+      font-family:var(--mono); font-size:.52rem; letter-spacing:.3em;
+      color:var(--gold); background:var(--glass-gold); padding:.25rem .75rem;
+      border:1px solid rgba(201,168,76,.3);
+    }
+    .package-card:hover { transform:translateY(-6px); box-shadow:var(--shadow-xl); }
+    .package-tier {
+      font-family:var(--mono); font-size:.58rem; letter-spacing:.4em;
+      text-transform:uppercase; color:var(--gold); margin-bottom:.8rem;
+    }
+    .package-name {
+      font-family:var(--display); font-size:2.2rem; font-weight:700; line-height:1;
+      margin-bottom:.5rem;
+    }
+    .package-price {
+      font-family:var(--display); font-size:3.5rem; font-weight:700; color:var(--gold);
+      margin:1.5rem 0;
+    }
+    .package-price span { font-size:1rem; color:var(--muted); font-weight:300; }
+    .package-features { list-style:none; margin-bottom:2rem; }
+    .package-features li {
+      padding:.6rem 0; border-bottom:1px solid rgba(248,244,238,.06);
+      font-size:.85rem; color:rgba(248,244,238,.65);
+      display:flex; align-items:center; gap:.75rem;
+    }
+    .package-features li::before { content:'✓'; color:var(--gold); font-size:.8rem; flex-shrink:0; }
+
+    /* LIVESTREAM */
+    .livestream {
+      padding: var(--section-pad) 0; background:var(--dark);
+    }
+    .livestream-inner {
+      display:grid; grid-template-columns:1fr 1fr; gap:6rem;
+      max-width:1200px; margin:0 auto; padding:0 var(--gutter); align-items:center;
+    }
+    .stream-preview {
+      position:relative; aspect-ratio:16/9;
+      background:rgba(10,36,99,.3); border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center; overflow:hidden;
+    }
+    .stream-preview img {
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; filter:brightness(.5);
+    }
+    .stream-badge {
+      position:absolute; top:1rem; left:1rem;
+      background:rgba(255,0,0,.85); color:#fff;
+      font-family:var(--mono); font-size:.52rem; letter-spacing:.3em;
+      text-transform:uppercase; padding:.3rem .8rem;
+      display:flex; align-items:center; gap:.5rem;
+    }
+    .stream-play {
+      position:relative; z-index:2;
+      width:80px; height:80px; border-radius:50%;
+      border:2px solid rgba(255,255,255,.6);
+      display:flex; align-items:center; justify-content:center;
+      font-size:2rem; cursor:none;
+      transition:all .3s; background:rgba(255,255,255,.1);
+    }
+    .stream-play:hover { background:rgba(255,255,255,.2); transform:scale(1.1); }
+
+    /* NUMBERS */
+    .finale-numbers {
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+      gap:1px; max-width:1200px; margin:5rem auto 0; padding:0 var(--gutter);
+    }
+    .finale-num {
+      padding:2.5rem; text-align:center; background:var(--glass); border:1px solid var(--border);
+    }
+    .finale-big {
+      font-family:var(--display); font-size:3rem; font-weight:700; color:var(--gold);
+      line-height:1; display:block;
+    }
+    .finale-small {
+      font-family:var(--mono); font-size:.52rem; letter-spacing:.3em;
+      text-transform:uppercase; color:rgba(248,244,238,.35); margin-top:.6rem; display:block;
+    }
+
+    @media(max-width:768px) {
+      .livestream-inner { grid-template-columns:1fr; }
+      .packages-grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="cursor-dot"></div><div class="cursor-circle"></div>
+<div class="noise" aria-hidden="true"></div>
+<div id="scroll-progress"></div>
+
+<nav class="nav">
+  <a class="nav-logo" href="../index.html">WORLD<span>LIGHT</span></a>
+  <ul class="nav-links">
+    <li><a href="tour.html">Tour</a></li>
+    <li><a href="final.html" style="color:var(--gold)">Final Show</a></li>
+    <li><a href="impact.html">Impact</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="press.html">Press</a></li>
+    <li><a href="donate.html" class="nav-donate">Donate</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-overlay" id="nav-overlay">
+  <a href="tour.html">Tour</a><a href="final.html">Final Show</a>
+  <a href="impact.html">Impact</a><a href="about.html">About</a>
+  <a href="press.html">Press</a><a href="donate.html">Donate</a>
+</div>
+
+<!-- CINEMATIC HERO -->
+<header class="finale-hero" aria-label="The Grand Finale">
+  <img class="finale-hero-img"
+    src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1920&q=85&fit=crop"
+    alt="Massive stadium concert at night with spectacular lighting" fetchpriority="high"/>
+  <div class="finale-hero-overlay" aria-hidden="true"></div>
+  <div class="finale-content">
+    <div class="finale-date-chip">December 31, 2025 · The World Stage</div>
+    <h1 class="finale-title">
+      <span>The Greatest</span>
+      <em>Night on Earth</em>
+    </h1>
+    <p class="finale-sub">100,000 in the stadium · 2 billion watching worldwide · one shared heartbeat</p>
+    <div style="display:flex;gap:1rem;justify-content:center;margin-top:3rem;flex-wrap:wrap;opacity:0;animation:fadeUp .9s 1.4s forwards;">
+      <a href="#packages" class="btn btn-gold">✦ &ensp; Get VIP Access</a>
+      <a href="#livestream" class="btn btn-outline">🌍 &ensp; Join Global Stream</a>
+    </div>
+  </div>
+</header>
+
+<!-- COUNTDOWN -->
+<div style="background:rgba(2,9,18,.97);border-bottom:1px solid var(--border);padding:3rem var(--gutter);text-align:center;">
+  <p style="font-family:var(--mono);font-size:.58rem;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;">Time Until the Grand Finale</p>
+  <div style="display:flex;justify-content:center;gap:1px;flex-wrap:wrap;">
+    <div style="min-width:110px;padding:2rem 1.5rem;background:var(--glass);border:1px solid var(--border);">
+      <span class="cd-num" id="cd-d" style="font-family:var(--display);font-size:3.5rem;font-weight:700;color:var(--gold);line-height:1;display:block;">000</span>
+      <span style="font-family:var(--mono);font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(248,244,238,.3);margin-top:.5rem;display:block;">Days</span>
+    </div>
+    <div style="min-width:110px;padding:2rem 1.5rem;background:var(--glass);border:1px solid var(--border);">
+      <span id="cd-h" style="font-family:var(--display);font-size:3.5rem;font-weight:700;color:var(--gold);line-height:1;display:block;">00</span>
+      <span style="font-family:var(--mono);font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(248,244,238,.3);margin-top:.5rem;display:block;">Hours</span>
+    </div>
+    <div style="min-width:110px;padding:2rem 1.5rem;background:var(--glass);border:1px solid var(--border);">
+      <span id="cd-m" style="font-family:var(--display);font-size:3.5rem;font-weight:700;color:var(--gold);line-height:1;display:block;">00</span>
+      <span style="font-family:var(--mono);font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(248,244,238,.3);margin-top:.5rem;display:block;">Minutes</span>
+    </div>
+    <div style="min-width:110px;padding:2rem 1.5rem;background:var(--glass);border:1px solid var(--border);">
+      <span id="cd-s" style="font-family:var(--display);font-size:3.5rem;font-weight:700;color:var(--gold);line-height:1;display:block;">00</span>
+      <span style="font-family:var(--mono);font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(248,244,238,.3);margin-top:.5rem;display:block;">Seconds</span>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="finale-features" aria-label="Event Features">
+  <div class="container">
+    <header class="section-header-center">
+      <span class="section-eyebrow reveal">What to Expect</span>
+      <h2 class="section-title reveal d1">An <em>Unforgettable</em> Night</h2>
+      <div class="gold-rule center reveal d2"></div>
+    </header>
+  </div>
+  <div class="features-grid">
+    <div class="feature-cell reveal"><span class="feature-icon">🎵</span><h3 class="feature-title">World-Class Artists</h3><p class="feature-desc">The greatest names in global music, from every genre and every continent, sharing one stage for one night only.</p></div>
+    <div class="feature-cell reveal d1"><span class="feature-icon">🎻</span><h3 class="feature-title">Grand Orchestra</h3><p class="feature-desc">A 200-piece international orchestra performing new compositions created specifically for this historic event.</p></div>
+    <div class="feature-cell reveal d2"><span class="feature-icon">🚁</span><h3 class="feature-title">Drone Light Show</h3><p class="feature-desc">2,000 synchronised drones painting the night sky above the stadium with maps, symbols of hope and the children's faces.</p></div>
+    <div class="feature-cell reveal d3"><span class="feature-icon">💡</span><h3 class="feature-title">Light Installation</h3><p class="feature-desc">A city-scale light installation designed by the world's leading visual artists — turning the entire stadium into one living organism.</p></div>
+    <div class="feature-cell reveal"><span class="feature-icon">🌍</span><h3 class="feature-title">Global Livestream</h3><p class="feature-desc">Free global livestream in 12 languages, projected simultaneously in 200+ cities. No one is left out.</p></div>
+    <div class="feature-cell reveal d1"><span class="feature-icon">🎭</span><h3 class="feature-title">Charity Gala</h3><p class="feature-desc">A private celebrity dinner and silent auction raising millions for children in crisis, attended by world leaders and philanthropists.</p></div>
+    <div class="feature-cell reveal d2"><span class="feature-icon">🎬</span><h3 class="feature-title">Documentary Premiere</h3><p class="feature-desc">The premiere screening of the full WorldLight Tour documentary — one year, six continents, one extraordinary journey.</p></div>
+    <div class="feature-cell reveal d3"><span class="feature-icon">⭐</span><h3 class="feature-title">Surprise Guests</h3><p class="feature-desc">The biggest surprise line-up in music history. Not a single name announced until they walk on stage.</p></div>
+  </div>
+
+  <div class="finale-numbers">
+    <div class="finale-num reveal"><span class="finale-big" data-count="100000">0</span><span class="finale-small">In the Stadium</span></div>
+    <div class="finale-num reveal d1"><span class="finale-big" data-count="2000000000">0</span><span class="finale-small">Global Viewers</span></div>
+    <div class="finale-num reveal d2"><span class="finale-big" data-count="200">0</span><span class="finale-small">Drone Show</span></div>
+    <div class="finale-num reveal d3"><span class="finale-big" data-count="12">0</span><span class="finale-small">Languages Live</span></div>
+    <div class="finale-num reveal d4"><span class="finale-big" data-count="200">0</span><span class="finale-small">Orchestra Members</span></div>
+  </div>
+</section>
+
+<!-- VIP PACKAGES -->
+<section class="packages" id="packages" aria-label="VIP Packages">
+  <div class="container">
+    <header class="section-header-center">
+      <span class="section-eyebrow reveal">Exclusive Access</span>
+      <h2 class="section-title reveal d1"><em>VIP</em> Packages</h2>
+      <div class="gold-rule center reveal d2"></div>
+      <p class="section-sub reveal d3">Three tiers of unforgettable access to the most important night in music history. Every package includes a charitable donation component.</p>
+    </header>
+  </div>
+  <div class="packages-grid">
+    <div class="package-card reveal">
+      <p class="package-tier">Tier One</p>
+      <h3 class="package-name">Luminary</h3>
+      <div class="package-price">$499 <span>per person</span></div>
+      <ul class="package-features">
+        <li>Premium stadium seating</li>
+        <li>Official programme &amp; merchandise</li>
+        <li>Welcome champagne reception</li>
+        <li>Exclusive Luminary lanyard</li>
+        <li>$100 donated to WorldLight charity fund</li>
+      </ul>
+      <a href="donate.html" class="btn btn-ghost" style="width:100%;justify-content:center;">Book Luminary</a>
+    </div>
+    <div class="package-card featured reveal d1">
+      <p class="package-tier">Tier Two</p>
+      <h3 class="package-name">Celestial</h3>
+      <div class="package-price">$1,499 <span>per person</span></div>
+      <ul class="package-features">
+        <li>Front-row premium seating</li>
+        <li>Backstage access &amp; guided tour</li>
+        <li>Artist meet &amp; greet opportunity</li>
+        <li>Gala dinner invitation</li>
+        <li>Exclusive merchandise box</li>
+        <li>Documentary credit</li>
+        <li>$500 donated to WorldLight</li>
+      </ul>
+      <a href="donate.html" class="btn btn-gold" style="width:100%;justify-content:center;">Book Celestial</a>
+    </div>
+    <div class="package-card reveal d2">
+      <p class="package-tier">Tier Three</p>
+      <h3 class="package-name">Sovereign</h3>
+      <div class="package-price">$4,999 <span>per person</span></div>
+      <ul class="package-features">
+        <li>Stage-side exclusive lounge</li>
+        <li>Full backstage immersion</li>
+        <li>Private artist dinner</li>
+        <li>Sound check attendance</li>
+        <li>Signed memorabilia collection</li>
+        <li>Personal WorldLight ambassador title</li>
+        <li>$2,000 donated to WorldLight</li>
+      </ul>
+      <a href="donate.html" class="btn btn-ghost" style="width:100%;justify-content:center;">Book Sovereign</a>
+    </div>
+  </div>
+</section>
+
+<!-- LIVESTREAM -->
+<section class="livestream" id="livestream" aria-label="Global Livestream">
+  <div class="livestream-inner">
+    <div class="reveal-l">
+      <div class="stream-preview">
+        <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=75&fit=crop" alt="Concert stage preview" loading="lazy"/>
+        <div class="stream-badge"><span style="width:6px;height:6px;border-radius:50%;background:#fff;display:block;animation:livePulse 1.5s infinite"></span>LIVE · DEC 31</div>
+        <button class="stream-play" aria-label="Watch trailer">▶</button>
+      </div>
+    </div>
+    <div class="reveal-r">
+      <span class="section-eyebrow">Free for Everyone</span>
+      <h2 class="section-title">Watch the<br/><em>World Unite</em></h2>
+      <div class="gold-rule"></div>
+      <p style="font-size:.95rem;color:var(--muted);line-height:1.9;margin-bottom:2rem;">
+        The WorldLight Grand Finale will be streamed live, free of charge, in 12 languages across every platform. No paywall. No borders. Because hope belongs to everyone.
+      </p>
+      <ul style="list-style:none;margin-bottom:2.5rem;">
+        <li style="padding:.6rem 0;border-bottom:1px solid var(--border-soft);font-size:.85rem;color:rgba(248,244,238,.6);display:flex;align-items:center;gap:.75rem;"><span style="color:var(--gold)">✓</span> Available on YouTube, Twitch, Facebook Live &amp; the WorldLight app</li>
+        <li style="padding:.6rem 0;border-bottom:1px solid var(--border-soft);font-size:.85rem;color:rgba(248,244,238,.6);display:flex;align-items:center;gap:.75rem;"><span style="color:var(--gold)">✓</span> 4K HDR quality · Dolby Atmos audio</li>
+        <li style="padding:.6rem 0;border-bottom:1px solid var(--border-soft);font-size:.85rem;color:rgba(248,244,238,.6);display:flex;align-items:center;gap:.75rem;"><span style="color:var(--gold)">✓</span> Live subtitles in 12 languages</li>
+        <li style="padding:.6rem 0;font-size:.85rem;color:rgba(248,244,238,.6);display:flex;align-items:center;gap:.75rem;"><span style="color:var(--gold)">✓</span> Donate while you watch — integrated in the stream</li>
+      </ul>
+      <a href="community.html" class="btn btn-gold">Set a Reminder →</a>
+    </div>
+  </div>
+</section>
+
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <div><p class="footer-brand-name">WORLDLIGHT TOUR</p><p class="footer-brand-desc">The world's greatest humanitarian music and culture movement.</p></div>
+    <div><p class="footer-col-label">Event</p><ul class="footer-nav"><li><a href="#packages">VIP Packages</a></li><li><a href="#livestream">Livestream</a></li><li><a href="tour.html">Tour Dates</a></li></ul></div>
+    <div><p class="footer-col-label">Org</p><ul class="footer-nav"><li><a href="about.html">About</a></li><li><a href="impact.html">Impact</a></li><li><a href="donate.html">Donate</a></li></ul></div>
+    <div><p class="footer-col-label">Legal</p><ul class="footer-nav"><li><a href="legal.html">Privacy</a></li><li><a href="legal.html">Terms</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p class="footer-copy">© 2025 WorldLight Tour. All rights reserved.</p></div>
+</footer>
+<style>@keyframes livePulse{0%,100%{opacity:1}50%{opacity:.4}}</style>
+<script src="../js/main.js"></script>
+</body>
+</html>

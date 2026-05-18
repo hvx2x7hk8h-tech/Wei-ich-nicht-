@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Impact — WORLDLIGHT TOUR</title>
+  <meta name="description" content="Real stories. Real change. See how WorldLight Tour is transforming lives across 48 countries."/>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <style>
+    .page-hero { min-height:65vh; display:flex; align-items:flex-end; position:relative; overflow:hidden; padding-bottom:5rem; }
+    .page-hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.3) saturate(1.1); }
+    .page-hero-overlay { position:absolute; inset:0; background:linear-gradient(to top, var(--deep) 0%, transparent 60%), radial-gradient(ellipse 70% 50% at 50% 30%, rgba(201,168,76,.15), transparent); }
+    .page-hero-content { position:relative; z-index:5; padding:0 var(--gutter); width:100%; max-width:1280px; margin:0 auto; }
+    .page-eyebrow { font-family:var(--mono); font-size:.6rem; letter-spacing:.55em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; display:block; }
+    .page-title { font-family:var(--display); font-size:clamp(4rem,9vw,9rem); font-weight:700; line-height:.88; letter-spacing:-.02em; }
+    .page-title em { color:var(--gold); font-style:italic; }
+
+    /* NUMBERS STRIP */
+    .numbers-strip {
+      display:grid; grid-template-columns:repeat(6,1fr);
+      border-bottom:1px solid var(--border-soft);
+    }
+    .num-cell {
+      padding:3rem 2rem; text-align:center;
+      background:var(--dark); border-right:1px solid var(--border-soft);
+      position:relative;
+    }
+    .num-cell::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(to right, transparent, var(--gold), transparent);
+      transform:scaleX(0); transition:transform .5s;
+    }
+    .num-cell:hover::before { transform:scaleX(1); }
+    .num-big { font-family:var(--display); font-size:3rem; font-weight:700; color:var(--gold); line-height:1; display:block; }
+    .num-small { font-family:var(--mono); font-size:.52rem; letter-spacing:.3em; text-transform:uppercase; color:rgba(248,244,238,.35); margin-top:.5rem; display:block; }
+
+    /* STORIES */
+    .stories-section { padding:var(--section-pad) 0; background:var(--deep); }
+    .stories-big-grid {
+      display:grid; grid-template-columns:1.5fr 1fr;
+      gap:2px; max-width:1280px; margin:4rem auto 0; padding:0 var(--gutter);
+    }
+    .story-feature {
+      position:relative; overflow:hidden; cursor:none;
+      min-height:500px; display:flex; align-items:flex-end;
+    }
+    .story-feature img {
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; filter:brightness(.55) saturate(1.1);
+      transition:transform .8s cubic-bezier(.16,1,.3,1);
+    }
+    .story-feature:hover img { transform:scale(1.05); }
+    .story-feature-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(to top, rgba(2,9,18,.9) 0%, transparent 55%);
+    }
+    .story-feature-body {
+      position:relative; z-index:2; padding:2.5rem;
+    }
+    .story-loc { font-family:var(--mono); font-size:.55rem; letter-spacing:.35em; text-transform:uppercase; color:var(--gold); margin-bottom:.5rem; }
+    .story-title { font-family:var(--display); font-size:2.2rem; font-weight:700; line-height:1.1; margin-bottom:.75rem; }
+    .story-text { font-size:.85rem; color:rgba(248,244,238,.65); line-height:1.8; }
+    .story-read { display:inline-flex; align-items:center; gap:.5rem; margin-top:1.2rem; font-family:var(--mono); font-size:.55rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); text-decoration:none; transition:gap .3s; }
+    .story-read:hover { gap:.9rem; }
+
+    .stories-side { display:flex; flex-direction:column; gap:2px; }
+    .story-small {
+      flex:1; position:relative; overflow:hidden; cursor:none;
+      display:flex; align-items:flex-end; min-height:200px;
+    }
+    .story-small img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.5); transition:transform .6s; }
+    .story-small:hover img { transform:scale(1.05); }
+    .story-small-overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(2,9,18,.85) 0%, transparent 60%); }
+    .story-small-body { position:relative; z-index:2; padding:1.5rem; }
+    .story-small-loc { font-family:var(--mono); font-size:.5rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); }
+    .story-small-title { font-family:var(--display); font-size:1.3rem; font-weight:700; margin-top:.3rem; }
+
+    /* MORE STORIES GRID */
+    .more-stories {
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+      gap:2px; max-width:1280px; margin:2px auto 0; padding:0 var(--gutter);
+    }
+    .story-card {
+      background:var(--glass); border:1px solid var(--border);
+      overflow:hidden; cursor:none; transition:transform .4s;
+    }
+    .story-card:hover { transform:translateY(-6px); box-shadow:0 30px 80px rgba(0,0,0,.5); }
+    .sc-img { width:100%; aspect-ratio:16/9; object-fit:cover; filter:brightness(.7); display:block; transition:filter .4s, transform .5s; }
+    .story-card:hover .sc-img { filter:brightness(.85); transform:scale(1.03); }
+    .sc-body { padding:1.8rem; }
+    .sc-loc { font-family:var(--mono); font-size:.52rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); }
+    .sc-title { font-family:var(--display); font-size:1.5rem; font-weight:600; margin-top:.4rem; line-height:1.2; }
+    .sc-text { font-size:.82rem; color:var(--muted); margin-top:.6rem; line-height:1.8; }
+    .sc-link { display:inline-flex; align-items:center; gap:.5rem; margin-top:1rem; font-family:var(--mono); font-size:.52rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); text-decoration:none; transition:gap .3s; }
+    .sc-link:hover { gap:.8rem; }
+
+    /* PROJECTS MAP */
+    .projects-section { padding:var(--section-pad) 0; background:var(--dark); }
+    .projects-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1px; max-width:1280px; margin:4rem auto 0; padding:0 var(--gutter); }
+    .project-card { padding:2.5rem; background:var(--glass); border:1px solid var(--border); position:relative; overflow:hidden; }
+    .project-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:1px; background:linear-gradient(to right,transparent,var(--gold),transparent); transform:scaleX(0); transition:transform .4s; }
+    .project-card:hover::after { transform:scaleX(1); }
+    .project-tag { font-family:var(--mono); font-size:.52rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); margin-bottom:.8rem; }
+    .project-name { font-family:var(--display); font-size:1.6rem; font-weight:700; line-height:1.1; margin-bottom:.5rem; }
+    .project-country { font-size:.75rem; color:rgba(248,244,238,.4); }
+    .project-desc { font-size:.82rem; color:var(--muted); margin-top:1rem; line-height:1.8; }
+    .project-stat { font-family:var(--display); font-size:2.5rem; font-weight:700; color:var(--gold); margin-top:1.5rem; }
+    .project-stat-label { font-family:var(--mono); font-size:.5rem; letter-spacing:.25em; text-transform:uppercase; color:rgba(248,244,238,.3); }
+
+    /* REPORTS */
+    .reports-section { padding:var(--section-pad) 0; background:var(--deep); }
+    .reports-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1px; max-width:1280px; margin:4rem auto 0; padding:0 var(--gutter); }
+    .report-card { padding:2.5rem; background:var(--glass); border:1px solid var(--border); cursor:none; transition:all .3s; }
+    .report-card:hover { border-color:rgba(201,168,76,.4); transform:translateY(-3px); }
+    .report-icon { font-size:2rem; margin-bottom:1rem; display:block; }
+    .report-year { font-family:var(--mono); font-size:.55rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); }
+    .report-title { font-family:var(--display); font-size:1.4rem; font-weight:700; margin-top:.4rem; }
+    .report-desc { font-size:.8rem; color:var(--muted); margin-top:.6rem; line-height:1.7; }
+    .report-dl { display:inline-flex; align-items:center; gap:.5rem; margin-top:1.2rem; font-family:var(--mono); font-size:.52rem; letter-spacing:.25em; text-transform:uppercase; color:var(--gold); text-decoration:none; }
+
+    @media(max-width:1024px) {
+      .numbers-strip { grid-template-columns:repeat(3,1fr); }
+      .stories-big-grid { grid-template-columns:1fr; }
+    }
+    @media(max-width:768px) {
+      .numbers-strip { grid-template-columns:repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+<div class="cursor-dot"></div><div class="cursor-circle"></div>
+<div class="noise" aria-hidden="true"></div>
+<div id="scroll-progress"></div>
+<nav class="nav">
+  <a class="nav-logo" href="../index.html">WORLD<span>LIGHT</span></a>
+  <ul class="nav-links">
+    <li><a href="tour.html">Tour</a></li><li><a href="final.html">Final Show</a></li>
+    <li><a href="impact.html" style="color:var(--gold)">Impact</a></li><li><a href="about.html">About</a></li>
+    <li><a href="press.html">Press</a></li><li><a href="donate.html" class="nav-donate">Donate</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-overlay" id="nav-overlay">
+  <a href="tour.html">Tour</a><a href="final.html">Final Show</a>
+  <a href="impact.html">Impact</a><a href="about.html">About</a>
+  <a href="press.html">Press</a><a href="donate.html">Donate</a>
+</div>
+
+<header class="page-hero">
+  <img class="page-hero-img" src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1920&q=80&fit=crop" alt="Children learning together" fetchpriority="high"/>
+  <div class="page-hero-overlay" aria-hidden="true"></div>
+  <div class="page-hero-content">
+    <span class="page-eyebrow">Real Change. Real People.</span>
+    <h1 class="page-title">Global <em>Impact</em></h1>
+  </div>
+</header>
+
+<!-- NUMBERS -->
+<div class="numbers-strip" role="region" aria-label="Impact statistics">
+  <div class="num-cell"><span class="num-big" data-count="12000000">0</span><span class="num-small">Children Reached</span></div>
+  <div class="num-cell"><span class="num-big" data-count="48">0</span><span class="num-small">Countries Active</span></div>
+  <div class="num-cell"><span class="num-big" data-count="3200">0</span><span class="num-small">Partner Schools</span></div>
+  <div class="num-cell"><span class="num-big" data-count="85000000" data-prefix="$">0</span><span class="num-small">Raised in Total</span></div>
+  <div class="num-cell"><span class="num-big" data-count="2400">0</span><span class="num-small">Youth Artists</span></div>
+  <div class="num-cell"><span class="num-big" data-count="190">0</span><span class="num-small">NGO Partners</span></div>
+</div>
+
+<!-- FEATURED STORIES -->
+<section class="stories-section" aria-label="Impact Stories">
+  <div class="container">
+    <header class="section-header-center">
+      <span class="section-eyebrow reveal">Human Stories</span>
+      <h2 class="section-title reveal d1">Behind Every<br/><em>Number, a Face</em></h2>
+      <div class="gold-rule center reveal d2"></div>
+    </header>
+  </div>
+  <div class="stories-big-grid">
+    <div class="story-feature reveal-l">
+      <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=900&q=80&fit=crop" alt="Young girl singing"/>
+      <div class="story-feature-overlay" aria-hidden="true"></div>
+      <div class="story-feature-body">
+        <p class="story-loc">Nairobi, Kenya</p>
+        <h2 class="story-title">Amara Found Her Voice</h2>
+        <p class="story-text">At 14, Amara hadn't spoken a word in two years after losing her entire family in a flood. A WorldLight outreach team found her in a community shelter and invited her to join a youth choir. Six months later, she sang her first note in front of 10,000 people at the Nairobi show. Today, she performs internationally and is studying music education.</p>
+        <a href="#" class="story-read">Read Full Story →</a>
+      </div>
+    </div>
+    <div class="stories-side">
+      <div class="story-small reveal-r">
+        <img src="https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=600&q=75&fit=crop" alt="Youth musicians in Medellín" loading="lazy"/>
+        <div class="story-small-overlay" aria-hidden="true"></div>
+        <div class="story-small-body">
+          <p class="story-small-loc">Medellín, Colombia</p>
+          <h3 class="story-small-title">Music Over Violence</h3>
+          <a href="#" class="story-read" style="font-size:.5rem;">Read →</a>
+        </div>
+      </div>
+      <div class="story-small reveal-r d2">
+        <img src="https://images.unsplash.com/photo-1555374018-13a8994ab246?w=600&q=75&fit=crop" alt="Child with candle" loading="lazy"/>
+        <div class="story-small-overlay" aria-hidden="true"></div>
+        <div class="story-small-body">
+          <p class="story-small-loc">Kharkiv, Ukraine</p>
+          <h3 class="story-small-title">Songs from the Shelter</h3>
+          <a href="#" class="story-read" style="font-size:.5rem;">Read →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MORE STORIES -->
+  <div class="more-stories" style="margin-top:4rem;">
+    <article class="story-card reveal">
+      <img class="sc-img" src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=700&q=75&fit=crop" alt="Child holding candle" loading="lazy"/>
+      <div class="sc-body">
+        <p class="sc-loc">Dhaka, Bangladesh</p>
+        <h3 class="sc-title">From the Streets to the Stage</h3>
+        <p class="sc-text">At 12, Rafi was working 14-hour days in a garment district. A WorldLight education partner enrolled him in school and a percussion class. He performed at the Dhaka show.</p>
+        <a href="#" class="sc-link">Read Story →</a>
+      </div>
+    </article>
+    <article class="story-card reveal d1">
+      <img class="sc-img" src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=700&q=75&fit=crop" alt="African community" loading="lazy"/>
+      <div class="sc-body">
+        <p class="sc-loc">Accra, Ghana</p>
+        <h3 class="sc-title">A Choir That Built a School</h3>
+        <p class="sc-text">The Accra Youth Choir, funded by WorldLight donations, raised enough through their performances to build a primary school in the Nima neighbourhood.</p>
+        <a href="#" class="sc-link">Read Story →</a>
+      </div>
+    </article>
+    <article class="story-card reveal d2">
+      <img class="sc-img" src="https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?w=700&q=75&fit=crop" alt="Children dancing" loading="lazy"/>
+      <div class="sc-body">
+        <p class="sc-loc">Manila, Philippines</p>
+        <h3 class="sc-title">Dance as Therapy</h3>
+        <p class="sc-text">After Typhoon Rai displaced 50,000 families, a WorldLight dance program helped 300 children process trauma. Psychologists report dramatic improvements in wellbeing.</p>
+        <a href="#" class="sc-link">Read Story →</a>
+      </div>
+    </article>
+    <article class="story-card reveal d3">
+      <img class="sc-img" src="https://images.unsplash.com/photo-1504164996022-09080787b6b8?w=700&q=75&fit=crop" alt="Middle Eastern children" loading="lazy"/>
+      <div class="sc-body">
+        <p class="sc-loc">Beirut, Lebanon</p>
+        <h3 class="sc-title">Music Across the Divide</h3>
+        <p class="sc-text">In a city still healing, 80 children from different communities formed the WorldLight Beirut Youth Orchestra — performing together for the first time.</p>
+        <a href="#" class="sc-link">Read Story →</a>
+      </div>
+    </article>
+    <article class="story-card reveal">
+      <img class="sc-img" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=700&q=75&fit=crop" alt="Young man with guitar" loading="lazy"/>
+      <div class="sc-body">
+        <p class="sc-loc">Caracas, Venezuela</p>
+        <h3 class="sc-title">Strings of Hope</h3>
+        <p class="sc-text">Inspired by El Sistema, WorldLight funded 500 instruments for children in Caracas's most underserved barrios. Three students have since won national competitions.</p>
+        <a href="#" class="sc-link">Read Story →</a>
+      </div>
+    </article>
+    <article class="story-card reveal d1">
+      <img class="sc-img" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&q=75&fit=crop" alt="Girl with headphones" loading="lazy"/>
+      <div class="sc-body">
+        <p class="sc-loc">Lagos, Nigeria</p>
+        <h3 class="sc-title">Radio for the Invisible</h3>
+        <p class="sc-text">A WorldLight grant funded a youth radio station in Lagos run entirely by teenagers, broadcasting mental health content to 400,000 listeners each week.</p>
+        <a href="#" class="sc-link">Read Story →</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects-section" aria-label="Active Projects">
+  <div class="container">
+    <header class="section-header-center">
+      <span class="section-eyebrow reveal">On the Ground</span>
+      <h2 class="section-title reveal d1">Active <em>Projects</em></h2>
+      <div class="gold-rule center reveal d2"></div>
+    </header>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal"><p class="project-tag">Education</p><h3 class="project-name">School Rebuild Initiative</h3><p class="project-country">Kenya · Uganda · Tanzania</p><p class="project-desc">Rebuilding and equipping 140 primary schools in East Africa with libraries, instruments and trained teachers.</p><div class="project-stat" data-count="140">0</div><p class="project-stat-label">Schools Rebuilt</p></div>
+    <div class="project-card reveal d1"><p class="project-tag">Mental Health</p><h3 class="project-name">Safe Spaces Program</h3><p class="project-country">Ukraine · Syria · Yemen</p><p class="project-desc">Psychosocial support centres for children in active conflict zones, using music and art as primary therapy tools.</p><div class="project-stat" data-count="24">0</div><p class="project-stat-label">Centres Open</p></div>
+    <div class="project-card reveal d2"><p class="project-tag">Arts Access</p><h3 class="project-name">Instruments for All</h3><p class="project-country">Global · 38 Countries</p><p class="project-desc">Donating, maintaining and teaching 50,000 instruments to children who have never had access to music education.</p><div class="project-stat" data-count="50000">0</div><p class="project-stat-label">Instruments Donated</p></div>
+    <div class="project-card reveal d3"><p class="project-tag">Youth Empowerment</p><h3 class="project-name">Young Voices Network</h3><p class="project-country">Global · 48 Cities</p><p class="project-desc">A global youth podcast and media platform giving teenagers in crisis zones a megaphone to share their stories.</p><div class="project-stat" data-count="2400">0</div><p class="project-stat-label">Youth Ambassadors</p></div>
+  </div>
+</section>
+
+<!-- ANNUAL REPORTS -->
+<section class="reports-section" aria-label="Annual Reports">
+  <div class="container">
+    <header class="section-header-center">
+      <span class="section-eyebrow reveal">Radical Transparency</span>
+      <h2 class="section-title reveal d1">Annual <em>Reports</em></h2>
+      <div class="gold-rule center reveal d2"></div>
+      <p class="section-sub reveal d3">Every cent accounted for. Every life measured. Full financial statements independently audited and publicly available.</p>
+    </header>
+  </div>
+  <div class="reports-grid">
+    <div class="report-card reveal"><span class="report-icon">📊</span><p class="report-year">2024</p><h3 class="report-title">Annual Impact Report 2024</h3><p class="report-desc">Full financial breakdown, project outcomes, and stories from 48 countries. 112 pages.</p><a href="#" class="report-dl">↓ &ensp;Download PDF</a></div>
+    <div class="report-card reveal d1"><span class="report-icon">📈</span><p class="report-year">2023</p><h3 class="report-title">Annual Impact Report 2023</h3><p class="report-desc">The founding year — how we reached 3 million children in 12 countries with $18M raised.</p><a href="#" class="report-dl">↓ &ensp;Download PDF</a></div>
+    <div class="report-card reveal d2"><span class="report-icon">🔍</span><p class="report-year">Audit</p><h3 class="report-title">Independent Audit Statement</h3><p class="report-desc">Third-party financial audit by Deloitte verifying all fund allocations and expenditures.</p><a href="#" class="report-dl">↓ &ensp;Download PDF</a></div>
+  </div>
+</section>
+
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <div><p class="footer-brand-name">WORLDLIGHT TOUR</p><p class="footer-brand-desc">The world's greatest humanitarian music movement.</p></div>
+    <div><p class="footer-col-label">Tour</p><ul class="footer-nav"><li><a href="tour.html">All Dates</a></li><li><a href="final.html">Final Show</a></li></ul></div>
+    <div><p class="footer-col-label">Org</p><ul class="footer-nav"><li><a href="about.html">About</a></li><li><a href="donate.html">Donate</a></li></ul></div>
+    <div><p class="footer-col-label">Legal</p><ul class="footer-nav"><li><a href="legal.html">Privacy</a></li><li><a href="legal.html">Terms</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p class="footer-copy">© 2025 WorldLight Tour. All rights reserved.</p></div>
+</footer>
+<script src="../js/main.js"></script>
+</body>
+</html>

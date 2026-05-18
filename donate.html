@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donate — WORLDLIGHT TOUR</title>
+  <meta name="description" content="Make a donation to WorldLight Tour. 100% goes directly to children in need. Secure via Stripe."/>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <style>
+    .donate-hero {
+      min-height:70vh; display:flex; align-items:flex-end;
+      position:relative; overflow:hidden; padding-bottom:5rem;
+    }
+    .donate-hero-img {
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; filter:brightness(.25) saturate(1.2);
+    }
+    .donate-hero-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(to top, var(--deep) 0%, rgba(2,9,18,.4) 60%, transparent 100%),
+        radial-gradient(ellipse 60% 50% at 50% 30%, rgba(201,168,76,.2), transparent);
+    }
+    .donate-hero-content {
+      position:relative; z-index:5; padding:0 var(--gutter); width:100%;
+      max-width:1280px; margin:0 auto;
+    }
+    .page-eyebrow { font-family:var(--mono); font-size:.6rem; letter-spacing:.55em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; display:block; }
+    .page-title { font-family:var(--display); font-size:clamp(4rem,9vw,9rem); font-weight:700; line-height:.88; letter-spacing:-.02em; }
+    .page-title em { color:var(--gold); font-style:italic; }
+
+    /* MAIN DONATE LAYOUT */
+    .donate-main {
+      max-width:1200px; margin:0 auto; padding:6rem var(--gutter);
+      display:grid; grid-template-columns:1fr 1.1fr; gap:5rem; align-items:start;
+    }
+
+    /* IMPACT PREVIEW */
+    .impact-preview { }
+    .impact-quote {
+      font-family:var(--display); font-size:1.8rem; font-weight:300; font-style:italic;
+      line-height:1.4; color:rgba(248,244,238,.75); margin-bottom:2.5rem;
+    }
+    .impact-quote em { color:var(--gold); font-style:normal; font-weight:700; }
+    .impact-stories-mini { display:flex; flex-direction:column; gap:1px; }
+    .mini-story {
+      display:flex; gap:1.5rem; padding:1.5rem;
+      background:var(--glass); border:1px solid var(--border);
+      transition:all .3s; cursor:none;
+    }
+    .mini-story:hover { border-color:rgba(201,168,76,.3); }
+    .mini-story-img {
+      width:80px; height:80px; object-fit:cover; flex-shrink:0;
+      filter:brightness(.75);
+    }
+    .mini-story-loc { font-family:var(--mono); font-size:.52rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); }
+    .mini-story-title { font-family:var(--display); font-size:1rem; font-weight:600; margin-top:.3rem; }
+    .mini-story-text { font-size:.78rem; color:var(--muted); margin-top:.3rem; line-height:1.7; }
+
+    /* DONATE FORM */
+    .donate-form-box {
+      background:rgba(6,14,34,.8); border:1px solid var(--border);
+      backdrop-filter:blur(16px); padding:3rem;
+      position:sticky; top:100px;
+    }
+    .donate-form-title {
+      font-family:var(--display); font-size:2rem; font-weight:700; margin-bottom:.5rem;
+    }
+    .donate-form-sub { font-size:.82rem; color:var(--muted); margin-bottom:2rem; line-height:1.7; }
+
+    .toggle-row { display:flex; gap:1px; margin-bottom:2rem; }
+    .toggle-btn {
+      flex:1; padding:.8rem; text-align:center;
+      background:var(--glass); border:1px solid var(--border);
+      font-family:var(--mono); font-size:.6rem; letter-spacing:.25em;
+      text-transform:uppercase; cursor:none; transition:all .3s;
+    }
+    .toggle-btn.active { background:var(--glass-gold); border-color:rgba(201,168,76,.4); color:var(--gold); }
+
+    .amounts { display:grid; grid-template-columns:1fr 1fr; gap:1px; margin-bottom:1px; }
+    .amt-btn {
+      padding:1.4rem 1rem; text-align:center;
+      background:var(--glass); border:1px solid var(--border);
+      cursor:none; transition:all .3s;
+    }
+    .amt-btn:hover, .amt-btn.active {
+      background:var(--glass-gold); border-color:rgba(201,168,76,.4);
+    }
+    .amt-val { font-family:var(--display); font-size:1.6rem; font-weight:700; display:block; line-height:1; transition:color .3s; }
+    .amt-btn.active .amt-val, .amt-btn:hover .amt-val { color:var(--gold); }
+    .amt-label { font-family:var(--mono); font-size:.5rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(248,244,238,.3); margin-top:.25rem; display:block; }
+
+    .custom-input-row {
+      display:flex; border:1px solid var(--border); background:var(--glass);
+      margin-bottom:1.5rem; transition:border-color .3s;
+    }
+    .custom-input-row:focus-within { border-color:var(--gold); }
+    .custom-pfx {
+      padding:.9rem 1.2rem; font-family:var(--display); font-size:1.3rem;
+      color:var(--gold); border-right:1px solid var(--border);
+    }
+    .custom-inp {
+      flex:1; background:transparent; border:none; outline:none;
+      padding:.9rem 1rem; color:var(--white);
+      font-family:var(--display); font-size:1.3rem;
+    }
+
+    .donate-cta-btn {
+      display:block; width:100%;
+      padding:1.3rem; text-align:center;
+      background:linear-gradient(135deg,var(--gold),var(--gold-light));
+      color:var(--deep); font-family:var(--ui); font-size:.78rem;
+      font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+      border:none; cursor:none; transition:all .3s; margin-bottom:1.5rem;
+    }
+    .donate-cta-btn:hover { transform:translateY(-2px); box-shadow:0 20px 50px rgba(201,168,76,.5); }
+
+    .trust-list { display:flex; flex-direction:column; gap:.6rem; }
+    .trust-item { display:flex; align-items:center; gap:.75rem; font-size:.75rem; color:rgba(248,244,238,.35); }
+
+    /* TRANSPARENCY */
+    .transparency {
+      background:var(--dark); padding:var(--section-pad) 0; border-top:1px solid var(--border-soft);
+    }
+    .breakdown-grid {
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+      gap:1px; max-width:1200px; margin:4rem auto 0; padding:0 var(--gutter);
+    }
+    .breakdown-cell {
+      padding:2.5rem; background:var(--glass); border:1px solid var(--border);
+      text-align:center;
+    }
+    .breakdown-pct {
+      font-family:var(--display); font-size:4rem; font-weight:700; color:var(--gold);
+      line-height:1; display:block;
+    }
+    .breakdown-label { font-family:var(--mono); font-size:.55rem; letter-spacing:.3em; text-transform:uppercase; color:rgba(248,244,238,.4); margin-top:.5rem; display:block; }
+    .breakdown-desc { font-size:.78rem; color:var(--muted); margin-top:.5rem; line-height:1.6; }
+
+    /* CORPORATE */
+    .corporate {
+      padding: var(--section-pad) 0;
+      background:var(--deep);
+    }
+    .corp-inner {
+      max-width:1200px; margin:0 auto; padding:0 var(--gutter);
+      display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center;
+    }
+    .corp-img { width:100%; aspect-ratio:4/3; object-fit:cover; filter:brightness(.65); }
+
+    @media(max-width:1024px) {
+      .donate-main { grid-template-columns:1fr; }
+      .donate-form-box { position:relative; top:0; }
+      .corp-inner { grid-template-columns:1fr; }
+    }
+    @media(max-width:768px) {
+      .amounts { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="cursor-dot"></div><div class="cursor-circle"></div>
+<div class="noise" aria-hidden="true"></div>
+<div id="scroll-progress"></div>
+
+<nav class="nav">
+  <a class="nav-logo" href="../index.html">WORLD<span>LIGHT</span></a>
+  <ul class="nav-links">
+    <li><a href="tour.html">Tour</a></li><li><a href="final.html">Final Show</a></li>
+    <li><a href="impact.html">Impact</a></li><li><a href="about.html">About</a></li>
+    <li><a href="press.html">Press</a></li>
+    <li><a href="donate.html" class="nav-donate" style="box-shadow:0 0 20px rgba(201,168,76,.3)">Donate</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-overlay" id="nav-overlay">
+  <a href="tour.html">Tour</a><a href="final.html">Final Show</a>
+  <a href="impact.html">Impact</a><a href="about.html">About</a>
+  <a href="press.html">Press</a><a href="donate.html">Donate</a>
+</div>
+
+<!-- HERO -->
+<header class="donate-hero" aria-label="Donate to WorldLight">
+  <img class="donate-hero-img"
+    src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1920&q=80&fit=crop"
+    alt="Children together, learning and smiling" fetchpriority="high"/>
+  <div class="donate-hero-overlay" aria-hidden="true"></div>
+  <div class="donate-hero-content">
+    <span class="page-eyebrow">Your Gift Creates Change</span>
+    <h1 class="page-title">Give <em>Hope</em></h1>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main>
+  <div class="donate-main">
+    <!-- LEFT: Stories & Impact -->
+    <div>
+      <blockquote class="impact-quote reveal">
+        "We don't just want to give children food.<br/>
+        We want to give them a <em>future worth living.</em>"
+      </blockquote>
+      <p style="font-size:.9rem;color:var(--muted);line-height:1.9;margin-bottom:3rem;" class="reveal d1">
+        Behind every number is a face. Behind every dollar is a future. 100% of donations go directly to children in need, channelled through our verified NGO network.
+      </p>
+      <div class="impact-stories-mini">
+        <div class="mini-story reveal">
+          <img class="mini-story-img" src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=200&q=70&fit=crop" alt="Amara" loading="lazy"/>
+          <div><p class="mini-story-loc">Nairobi, Kenya</p><h3 class="mini-story-title">Amara Found Her Voice</h3><p class="mini-story-text">At 14, she hadn't spoken in two years. A WorldLight choir changed everything.</p></div>
+        </div>
+        <div class="mini-story reveal d1">
+          <img class="mini-story-img" src="https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=200&q=70&fit=crop" alt="Youth musicians" loading="lazy"/>
+          <div><p class="mini-story-loc">Medellín, Colombia</p><h3 class="mini-story-title">Music Over Violence</h3><p class="mini-story-text">120 young people chose instruments over gang membership.</p></div>
+        </div>
+        <div class="mini-story reveal d2">
+          <img class="mini-story-img" src="https://images.unsplash.com/photo-1555374018-13a8994ab246?w=200&q=70&fit=crop" alt="Child with light" loading="lazy"/>
+          <div><p class="mini-story-loc">Kharkiv, Ukraine</p><h3 class="mini-story-title">Songs from the Shelter</h3><p class="mini-story-text">Children in bomb shelters wrote songs. WorldLight brought them to Berlin.</p></div>
+        </div>
+      </div>
+      <a href="impact.html" style="display:inline-block;margin-top:2rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);text-decoration:none;" class="reveal d3">Read All Stories →</a>
+    </div>
+
+    <!-- RIGHT: Donate Form -->
+    <div class="reveal-r">
+      <div class="donate-form-box">
+        <h2 class="donate-form-title">Make a Donation</h2>
+        <p class="donate-form-sub">Choose your amount. Every dollar reaches a child.</p>
+
+        <div class="toggle-row" role="group" aria-label="Donation type">
+          <button class="toggle-btn active" onclick="setToggle(this)">One-Time</button>
+          <button class="toggle-btn" onclick="setToggle(this)">Monthly</button>
+          <button class="toggle-btn" onclick="setToggle(this)">Corporate</button>
+        </div>
+
+        <div class="amounts" id="amounts">
+          <button class="amt-btn" data-amount="25" onclick="selectAmt(this)"><span class="amt-val">$25</span><span class="amt-label">Family meals</span></button>
+          <button class="amt-btn" data-amount="50" onclick="selectAmt(this)"><span class="amt-val">$50</span><span class="amt-label">School books</span></button>
+          <button class="amt-btn active" data-amount="100" onclick="selectAmt(this)"><span class="amt-val">$100</span><span class="amt-label">Music lessons</span></button>
+          <button class="amt-btn" data-amount="250" onclick="selectAmt(this)"><span class="amt-val">$250</span><span class="amt-label">Health care</span></button>
+          <button class="amt-btn" data-amount="500" onclick="selectAmt(this)"><span class="amt-val">$500</span><span class="amt-label">Sponsor artist</span></button>
+          <button class="amt-btn" data-amount="1000" onclick="selectAmt(this)"><span class="amt-val">$1K</span><span class="amt-label">Fund a project</span></button>
+        </div>
+
+        <div class="custom-input-row" style="margin-top:1px;">
+          <span class="custom-pfx">$</span>
+          <input class="custom-inp" id="custom-amount" type="number" placeholder="Custom amount" min="1" aria-label="Custom donation amount"/>
+        </div>
+
+        <button class="donate-cta-btn" id="donate-submit" style="margin-top:1px;" aria-label="Donate now">
+          ♡ &ensp; Donate Securely Now
+        </button>
+
+        <div class="trust-list">
+          <div class="trust-item"><span aria-hidden="true">🔒</span> 256-bit SSL · Powered by Stripe</div>
+          <div class="trust-item"><span aria-hidden="true">✓</span> 100% reaches children directly</div>
+          <div class="trust-item"><span aria-hidden="true">📋</span> Tax-deductible in 40+ countries</div>
+          <div class="trust-item"><span aria-hidden="true">🌍</span> USD · EUR · GBP · JPY · AED &amp; more</div>
+          <div class="trust-item"><span aria-hidden="true">📊</span> Full financial reports published quarterly</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRANSPARENCY -->
+  <section class="transparency" aria-label="How we use your donation">
+    <div class="container">
+      <header class="section-header-center">
+        <span class="section-eyebrow reveal">Radical Transparency</span>
+        <h2 class="section-title reveal d1">How Your Money <em>Works</em></h2>
+        <div class="gold-rule center reveal d2"></div>
+        <p class="section-sub reveal d3">We publish every financial report. Every cent is tracked and verified by independent auditors. Trust is not given — it is earned.</p>
+      </header>
+    </div>
+    <div class="breakdown-grid">
+      <div class="breakdown-cell reveal"><span class="breakdown-pct">78%</span><span class="breakdown-label">Direct Child Aid</span><p class="breakdown-desc">Education, healthcare, mental health support and emergency relief</p></div>
+      <div class="breakdown-cell reveal d1"><span class="breakdown-pct">12%</span><span class="breakdown-label">Youth Arts Programs</span><p class="breakdown-desc">Music, dance, theatre and creative workshops in underserved communities</p></div>
+      <div class="breakdown-cell reveal d2"><span class="breakdown-pct">7%</span><span class="breakdown-label">Operations</span><p class="breakdown-desc">Tour logistics, production, staff and technology infrastructure</p></div>
+      <div class="breakdown-cell reveal d3"><span class="breakdown-pct">3%</span><span class="breakdown-label">Admin</span><p class="breakdown-desc">Legal, compliance, auditing and governance</p></div>
+    </div>
+    <div style="text-align:center;margin-top:4rem;padding:0 var(--gutter);">
+      <a href="#" class="btn btn-ghost">↓ &ensp; Download Annual Report 2024</a>
+    </div>
+  </section>
+
+  <!-- CORPORATE -->
+  <section class="corporate" aria-label="Corporate Donations">
+    <div class="corp-inner">
+      <div class="reveal-l">
+        <img class="corp-img"
+          src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=75&fit=crop"
+          alt="Corporate team collaboration" loading="lazy"/>
+      </div>
+      <div class="reveal-r">
+        <span class="section-eyebrow">For Businesses</span>
+        <h2 class="section-title">Corporate <em>Giving</em></h2>
+        <div class="gold-rule"></div>
+        <p style="font-size:.9rem;color:var(--muted);line-height:1.9;margin-bottom:2rem;">
+          Partner with WorldLight as a corporate donor and receive exclusive branding exposure across the global tour, press mentions, and a dedicated impact report showing how your contribution changed lives.
+        </p>
+        <ul style="list-style:none;margin-bottom:2.5rem;">
+          <li style="padding:.6rem 0;border-bottom:1px solid var(--border-soft);font-size:.85rem;color:rgba(248,244,238,.6);display:flex;align-items:center;gap:.75rem;"><span style="color:var(--gold)">✓</span> Brand logo on all tour stage screens</li>
+          <li style="padding:.6rem 0;border-bottom:1px solid var(--border-soft);font-size:.85rem;color:rgba(248,244,238,.6);display:flex;align-items:center;gap:.75rem;"><span style="color:var(--gold)">✓</span> VIP tickets for your team</li>
+          <li style="padding:.6rem 0;border-bottom:1px solid var(--border-soft);font-size:.85rem;color:rgba(248,244,238,.6);display:flex;align-items:center;gap:.75rem;"><span style="color:var(--gold)">✓</span> Tax-deductible in all territories</li>
+          <li style="padding:.6rem 0;font-size:.85rem;color:rgba(248,244,238,.6);display:flex;align-items:center;gap:.75rem;"><span style="color:var(--gold)">✓</span> Dedicated impact report</li>
+        </ul>
+        <a href="press.html" class="btn btn-gold">Contact Corporate Team →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <div><p class="footer-brand-name">WORLDLIGHT TOUR</p><p class="footer-brand-desc">The world's greatest humanitarian music movement.</p></div>
+    <div><p class="footer-col-label">Tour</p><ul class="footer-nav"><li><a href="tour.html">Dates</a></li><li><a href="final.html">Final Show</a></li></ul></div>
+    <div><p class="footer-col-label">Org</p><ul class="footer-nav"><li><a href="about.html">About</a></li><li><a href="impact.html">Impact</a></li></ul></div>
+    <div><p class="footer-col-label">Legal</p><ul class="footer-nav"><li><a href="legal.html">Privacy</a></li><li><a href="legal.html">Terms</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p class="footer-copy">© 2025 WorldLight Tour. All rights reserved.</p></div>
+</footer>
+<script src="../js/main.js"></script>
+<script>
+  function setToggle(btn) {
+    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  function selectAmt(btn) {
+    document.querySelectorAll('.amt-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('custom-amount').value = '';
+  }
+  document.getElementById('donate-submit').addEventListener('click', () => {
+    const custom = document.getElementById('custom-amount').value;
+    const active = document.querySelector('.amt-btn.active');
+    const amount = custom || active?.dataset.amount || '100';
+    showToast(`Thank you! Redirecting to secure Stripe checkout for $${amount}...`, 'success');
+  });
+</script>
+</body>
+</html>

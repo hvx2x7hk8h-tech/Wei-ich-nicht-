@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Press &amp; Media — WORLDLIGHT TOUR</title>
+  <meta name="description" content="WorldLight Tour press resources, media kit, accreditation, press quotes and contact."/>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <style>
+    .page-hero { min-height:60vh; display:flex; align-items:flex-end; position:relative; overflow:hidden; padding-bottom:5rem; }
+    .page-hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.28) saturate(1.1); }
+    .page-hero-overlay { position:absolute; inset:0; background:linear-gradient(to top, var(--deep) 0%, transparent 60%); }
+    .page-hero-content { position:relative; z-index:5; padding:0 var(--gutter); width:100%; max-width:1280px; margin:0 auto; }
+    .page-eyebrow { font-family:var(--mono); font-size:.6rem; letter-spacing:.55em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; display:block; }
+    .page-title { font-family:var(--display); font-size:clamp(4rem,9vw,9rem); font-weight:700; line-height:.88; letter-spacing:-.02em; }
+    .page-title em { color:var(--gold); font-style:italic; }
+
+    /* QUOTES */
+    .press-quotes { padding:var(--section-pad) 0; background:var(--dark); }
+    .quotes-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:2px; max-width:1280px; margin:4rem auto 0; padding:0 var(--gutter); }
+    .quote-card { padding:3rem; background:var(--glass); border:1px solid var(--border); position:relative; overflow:hidden; }
+    .quote-card::before { content:'"'; position:absolute; top:1rem; right:1.5rem; font-family:var(--display); font-size:6rem; line-height:1; color:rgba(201,168,76,.08); font-style:italic; }
+    .q-text { font-family:var(--display); font-size:1.2rem; font-style:italic; line-height:1.55; color:rgba(248,244,238,.8); margin-bottom:2rem; }
+    .q-outlet { font-family:var(--mono); font-size:.55rem; letter-spacing:.4em; text-transform:uppercase; color:var(--gold); }
+    .q-date { font-size:.72rem; color:rgba(248,244,238,.25); margin-top:.3rem; }
+
+    /* MEDIA COVERAGE */
+    .coverage { padding:var(--section-pad) 0; background:var(--deep); }
+    .coverage-list { max-width:1280px; margin:4rem auto 0; padding:0 var(--gutter); display:flex; flex-direction:column; gap:1px; }
+    .coverage-item { display:flex; align-items:center; gap:3rem; padding:2rem 2.5rem; background:var(--glass); border:1px solid var(--border); cursor:none; transition:all .3s; }
+    .coverage-item:hover { border-color:rgba(201,168,76,.35); }
+    .cov-outlet { font-family:var(--display); font-size:1.2rem; font-weight:700; min-width:180px; flex-shrink:0; }
+    .cov-headline { font-size:.88rem; color:rgba(248,244,238,.65); flex:1; line-height:1.5; }
+    .cov-date { font-family:var(--mono); font-size:.52rem; letter-spacing:.2em; color:rgba(248,244,238,.25); flex-shrink:0; }
+    .cov-link { font-family:var(--mono); font-size:.52rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); text-decoration:none; flex-shrink:0; }
+
+    /* PRESS KIT */
+    .presskit { padding:var(--section-pad) 0; background:var(--dark); }
+    .kit-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1px; max-width:1280px; margin:4rem auto 0; padding:0 var(--gutter); }
+    .kit-card { padding:2.5rem; background:var(--glass); border:1px solid var(--border); cursor:none; transition:all .3s; }
+    .kit-card:hover { border-color:rgba(201,168,76,.4); transform:translateY(-3px); }
+    .kit-icon { font-size:2rem; margin-bottom:1rem; display:block; }
+    .kit-title { font-family:var(--display); font-size:1.3rem; font-weight:700; margin-bottom:.5rem; }
+    .kit-desc { font-size:.8rem; color:var(--muted); line-height:1.7; margin-bottom:1.2rem; }
+    .kit-size { font-family:var(--mono); font-size:.5rem; letter-spacing:.2em; color:rgba(248,244,238,.25); }
+    .kit-dl { display:inline-flex; align-items:center; gap:.5rem; margin-top:1rem; font-family:var(--mono); font-size:.52rem; letter-spacing:.25em; text-transform:uppercase; color:var(--gold); text-decoration:none; border:1px solid rgba(201,168,76,.3); padding:.4rem .9rem; transition:all .3s; }
+    .kit-dl:hover { background:var(--gold); color:var(--deep); }
+
+    /* ACCREDITATION */
+    .accred { padding:var(--section-pad) 0; background:var(--deep); }
+    .accred-inner { max-width:700px; margin:4rem auto 0; padding:0 var(--gutter); }
+    .accred-form { background:var(--glass); border:1px solid var(--border); padding:3rem; backdrop-filter:blur(12px); }
+    .form-group { margin-bottom:1.5rem; }
+    .form-label { font-family:var(--mono); font-size:.55rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:.5rem; }
+    .form-input { width:100%; background:rgba(255,255,255,.04); border:1px solid var(--border); color:var(--white); padding:.9rem 1.2rem; font-family:var(--ui); font-size:.9rem; outline:none; transition:border-color .3s; }
+    .form-input:focus { border-color:var(--gold); }
+    .form-select { width:100%; background:rgba(6,14,34,.9); border:1px solid var(--border); color:var(--white); padding:.9rem 1.2rem; font-family:var(--ui); font-size:.9rem; outline:none; cursor:none; }
+    .form-textarea { width:100%; background:rgba(255,255,255,.04); border:1px solid var(--border); color:var(--white); padding:.9rem 1.2rem; font-family:var(--ui); font-size:.9rem; resize:vertical; min-height:120px; outline:none; transition:border-color .3s; }
+    .form-textarea:focus { border-color:var(--gold); }
+    .form-btn { display:block; width:100%; padding:1.2rem; background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--deep); font-family:var(--ui); font-size:.75rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; border:none; cursor:none; transition:all .3s; }
+    .form-btn:hover { transform:translateY(-2px); box-shadow:0 15px 40px rgba(201,168,76,.5); }
+
+    /* CONTACT */
+    .press-contact { padding:5rem 0; background:var(--dark); text-align:center; border-top:1px solid var(--border-soft); }
+    .contact-items { display:flex; justify-content:center; gap:4rem; flex-wrap:wrap; margin-top:3rem; }
+    .contact-item { text-align:center; }
+    .contact-icon { font-size:1.5rem; margin-bottom:.75rem; display:block; }
+    .contact-label { font-family:var(--mono); font-size:.52rem; letter-spacing:.3em; text-transform:uppercase; color:rgba(248,244,238,.3); }
+    .contact-val { font-family:var(--display); font-size:1.1rem; color:var(--gold); margin-top:.25rem; text-decoration:none; transition:opacity .3s; }
+    .contact-val:hover { opacity:.75; }
+
+    @media(max-width:768px) {
+      .coverage-item { flex-direction:column; align-items:flex-start; gap:1rem; }
+      .cov-outlet { min-width:auto; }
+    }
+  </style>
+</head>
+<body>
+<div class="cursor-dot"></div><div class="cursor-circle"></div>
+<div class="noise" aria-hidden="true"></div>
+<div id="scroll-progress"></div>
+<nav class="nav">
+  <a class="nav-logo" href="../index.html">WORLD<span>LIGHT</span></a>
+  <ul class="nav-links">
+    <li><a href="tour.html">Tour</a></li><li><a href="final.html">Final Show</a></li>
+    <li><a href="impact.html">Impact</a></li><li><a href="about.html">About</a></li>
+    <li><a href="press.html" style="color:var(--gold)">Press</a></li><li><a href="donate.html" class="nav-donate">Donate</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-overlay" id="nav-overlay">
+  <a href="tour.html">Tour</a><a href="final.html">Final Show</a>
+  <a href="impact.html">Impact</a><a href="about.html">About</a>
+  <a href="press.html">Press</a><a href="donate.html">Donate</a>
+</div>
+
+<header class="page-hero">
+  <img class="page-hero-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1920&q=80&fit=crop" alt="Press microphones" fetchpriority="high"/>
+  <div class="page-hero-overlay" aria-hidden="true"></div>
+  <div class="page-hero-content">
+    <span class="page-eyebrow">Media Hub</span>
+    <h1 class="page-title">Press &amp; <em>Media</em></h1>
+  </div>
+</header>
+
+<!-- PRESS QUOTES -->
+<section class="press-quotes" aria-label="Press Coverage">
+  <div class="container">
+    <header class="section-header-center">
+      <span class="section-eyebrow reveal">What the World is Saying</span>
+      <h2 class="section-title reveal d1">Global <em>Recognition</em></h2>
+      <div class="gold-rule center reveal d2"></div>
+    </header>
+  </div>
+  <div class="quotes-grid">
+    <div class="quote-card reveal"><p class="q-text">"Nothing like this has ever been attempted. WorldLight is the cultural event of the decade — and possibly the century."</p><p class="q-outlet">The New York Times</p><p class="q-date">February 2025</p></div>
+    <div class="quote-card reveal d1"><p class="q-text">"A breathtaking fusion of art, activism and humanity. This is what global leadership looks like in the 21st century."</p><p class="q-outlet">The Guardian</p><p class="q-date">January 2025</p></div>
+    <div class="quote-card reveal d2"><p class="q-text">"If Coldplay, the Olympics, and UNICEF had a child — it would be WorldLight. A once-in-a-generation phenomenon."</p><p class="q-outlet">Rolling Stone</p><p class="q-date">March 2025</p></div>
+    <div class="quote-card reveal d3"><p class="q-text">"We have covered conflict, tragedy and injustice for 30 years. WorldLight is the first story that gave us hope."</p><p class="q-outlet">Der Spiegel</p><p class="q-date">February 2025</p></div>
+    <div class="quote-card reveal"><p class="q-text">"A seismic shift in how we think about charity, entertainment and global community. History will remember WorldLight."</p><p class="q-outlet">BBC World</p><p class="q-date">January 2025</p></div>
+    <div class="quote-card reveal d1"><p class="q-text">"The sheer scale of ambition is matched only by the depth of compassion. WorldLight restores faith in humanity."</p><p class="q-outlet">Le Monde</p><p class="q-date">March 2025</p></div>
+  </div>
+</section>
+
+<!-- MEDIA COVERAGE LIST -->
+<section class="coverage" aria-label="Media Coverage">
+  <div class="container">
+    <header class="section-header-center">
+      <span class="section-eyebrow reveal">In the News</span>
+      <h2 class="section-title reveal d1">Media <em>Coverage</em></h2>
+      <div class="gold-rule center reveal d2"></div>
+    </header>
+  </div>
+  <div class="coverage-list">
+    <div class="coverage-item reveal"><p class="cov-outlet">New York Times</p><p class="cov-headline">"WorldLight Tour: The Most Ambitious Humanitarian Event Since Live Aid"</p><p class="cov-date">MAR 2025</p><a href="#" class="cov-link">Read →</a></div>
+    <div class="coverage-item reveal"><p class="cov-outlet">BBC World</p><p class="cov-headline">"Inside WorldLight: How Music Is Changing Policy and Funding a Generation"</p><p class="cov-date">FEB 2025</p><a href="#" class="cov-link">Read →</a></div>
+    <div class="coverage-item reveal"><p class="cov-outlet">Rolling Stone</p><p class="cov-headline">"The 48-City Tour That Could Save a Million Children"</p><p class="cov-date">MAR 2025</p><a href="#" class="cov-link">Read →</a></div>
+    <div class="coverage-item reveal"><p class="cov-outlet">Der Spiegel</p><p class="cov-headline">"WorldLight: Wie Musik die Welt verändert" (How Music Changes the World)</p><p class="cov-date">FEB 2025</p><a href="#" class="cov-link">Read →</a></div>
+    <div class="coverage-item reveal"><p class="cov-outlet">Le Monde</p><p class="cov-headline">"WorldLight, le mouvement humanitaire qui unit le monde par la musique"</p><p class="cov-date">JAN 2025</p><a href="#" class="cov-link">Read →</a></div>
+    <div class="coverage-item reveal"><p class="cov-outlet">The Guardian</p><p class="cov-headline">"Is WorldLight the New Model for Global Charity? Experts Say Yes"</p><p class="cov-date">JAN 2025</p><a href="#" class="cov-link">Read →</a></div>
+  </div>
+</section>
+
+<!-- PRESS KIT DOWNLOADS -->
+<section class="presskit" aria-label="Press Kit Downloads">
+  <div class="container">
+    <header class="section-header-center">
+      <span class="section-eyebrow reveal">Resources</span>
+      <h2 class="section-title reveal d1">Press <em>Kit</em></h2>
+      <div class="gold-rule center reveal d2"></div>
+      <p class="section-sub reveal d3">Everything you need for coverage. Download assets, fact sheets, and high-resolution imagery.</p>
+    </header>
+  </div>
+  <div class="kit-grid">
+    <div class="kit-card reveal"><span class="kit-icon">📦</span><h3 class="kit-title">Full Press Kit</h3><p class="kit-desc">Complete press materials including fact sheet, brand guidelines, imagery and boilerplate.</p><p class="kit-size">ZIP · 284 MB</p><a href="#" class="kit-dl">↓ Download</a></div>
+    <div class="kit-card reveal d1"><span class="kit-icon">📸</span><h3 class="kit-title">Hi-Res Photography</h3><p class="kit-desc">Professional photography from all 48 tour shows, cleared for editorial use.</p><p class="kit-size">ZIP · 1.2 GB</p><a href="#" class="kit-dl">↓ Download</a></div>
+    <div class="kit-card reveal d2"><span class="kit-icon">🎨</span><h3 class="kit-title">Brand Assets</h3><p class="kit-desc">Official logos, colour palettes, typography and usage guidelines in SVG and PNG.</p><p class="kit-size">ZIP · 48 MB</p><a href="#" class="kit-dl">↓ Download</a></div>
+    <div class="kit-card reveal d3"><span class="kit-icon">📄</span><h3 class="kit-title">Fact Sheet 2025</h3><p class="kit-desc">Key figures, timeline, mission statement and leadership bios. Two-page PDF.</p><p class="kit-size">PDF · 2.4 MB</p><a href="#" class="kit-dl">↓ Download</a></div>
+    <div class="kit-card reveal"><span class="kit-icon">🎬</span><h3 class="kit-title">B-Roll Footage</h3><p class="kit-desc">Broadcast-quality B-roll from opening shows in Berlin and Paris. 4K UHD.</p><p class="kit-size">MP4 · 8.7 GB</p><a href="#" class="kit-dl">↓ Request</a></div>
+    <div class="kit-card reveal d1"><span class="kit-icon">🎙️</span><h3 class="kit-title">Audio Quotes</h3><p class="kit-desc">Pre-cleared audio statements from CEO Elena Vasquez and tour directors.</p><p class="kit-size">MP3 · 120 MB</p><a href="#" class="kit-dl">↓ Download</a></div>
+  </div>
+</section>
+
+<!-- ACCREDITATION -->
+<section class="accred" aria-label="Press Accreditation">
+  <div class="container">
+    <header class="section-header-center">
+      <span class="section-eyebrow reveal">Apply for Access</span>
+      <h2 class="section-title reveal d1">Press <em>Accreditation</em></h2>
+      <div class="gold-rule center reveal d2"></div>
+      <p class="section-sub reveal d3">Apply for journalist credentials for any WorldLight Tour show or the Grand Finale. Rolling applications — apply at least 3 weeks before the event date.</p>
+    </header>
+  </div>
+  <div class="accred-inner">
+    <form class="accred-form reveal" id="accred-form" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="acc-name">Full Name</label>
+        <input class="form-input" id="acc-name" type="text" placeholder="Jane Smith" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="acc-outlet">Media Outlet</label>
+        <input class="form-input" id="acc-outlet" type="text" placeholder="The New York Times" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="acc-role">Role</label>
+        <select class="form-select" id="acc-role">
+          <option>Journalist / Reporter</option>
+          <option>Photographer</option>
+          <option>Videographer</option>
+          <option>Editor</option>
+          <option>Broadcast Producer</option>
+          <option>Podcaster</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="acc-show">Show / City</label>
+        <select class="form-select" id="acc-show">
+          <option>Berlin — March 15</option>
+          <option>Paris — March 22</option>
+          <option>London — March 29</option>
+          <option>New York — May 10</option>
+          <option>Los Angeles — May 17</option>
+          <option>Lagos — August 9</option>
+          <option>Tokyo — September 20</option>
+          <option>Sydney — November 15</option>
+          <option>Grand Finale — December 31</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="acc-msg">Tell us about your planned coverage</label>
+        <textarea class="form-textarea" id="acc-msg" placeholder="Briefly describe your publication and the angle of your story..."></textarea>
+      </div>
+      <button class="form-btn" type="submit">Submit Accreditation Request</button>
+    </form>
+  </div>
+</section>
+
+<!-- PRESS CONTACT -->
+<div class="press-contact">
+  <div class="container">
+    <span class="section-eyebrow reveal" style="display:block;text-align:center;">Get in Touch</span>
+    <h2 class="section-title reveal d1" style="text-align:center;">Press <em>Contact</em></h2>
+    <div class="contact-items">
+      <div class="contact-item reveal">
+        <span class="contact-icon">📧</span>
+        <p class="contact-label">Media Enquiries</p>
+        <a class="contact-val" href="mailto:press@worldlighttour.org">press@worldlighttour.org</a>
+      </div>
+      <div class="contact-item reveal d1">
+        <span class="contact-icon">📞</span>
+        <p class="contact-label">Press Hotline</p>
+        <a class="contact-val" href="tel:+442071234567">+44 20 7123 4567</a>
+      </div>
+      <div class="contact-item reveal d2">
+        <span class="contact-icon">📍</span>
+        <p class="contact-label">HQ</p>
+        <p class="contact-val">London · Berlin · New York</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <div><p class="footer-brand-name">WORLDLIGHT TOUR</p><p class="footer-brand-desc">The world's greatest humanitarian music movement.</p></div>
+    <div><p class="footer-col-label">Tour</p><ul class="footer-nav"><li><a href="tour.html">All Dates</a></li><li><a href="final.html">Final Show</a></li></ul></div>
+    <div><p class="footer-col-label">Org</p><ul class="footer-nav"><li><a href="about.html">About</a></li><li><a href="impact.html">Impact</a></li><li><a href="donate.html">Donate</a></li></ul></div>
+    <div><p class="footer-col-label">Legal</p><ul class="footer-nav"><li><a href="legal.html">Privacy</a></li><li><a href="legal.html">Terms</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p class="footer-copy">© 2025 WorldLight Tour. All rights reserved.</p></div>
+</footer>
+<script src="../js/main.js"></script>
+<script>
+  document.getElementById('accred-form').addEventListener('submit', e => {
+    e.preventDefault();
+    showToast('Accreditation request received! We will respond within 48 hours.', 'success');
+    e.target.reset();
+  });
+</script>
+</body>
+</html>

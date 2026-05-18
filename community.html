@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Community — WORLDLIGHT TOUR</title>
+  <meta name="description" content="Join the WorldLight community. Newsletter, ambassador program, fan wall, social challenges and more."/>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <style>
+    .page-hero { min-height:65vh; display:flex; align-items:flex-end; position:relative; overflow:hidden; padding-bottom:5rem; }
+    .page-hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.28) saturate(1.1); }
+    .page-hero-overlay { position:absolute; inset:0; background:linear-gradient(to top, var(--deep) 0%, transparent 60%), radial-gradient(ellipse 70% 60% at 50% 30%, rgba(201,168,76,.15), transparent); }
+    .page-hero-content { position:relative; z-index:5; padding:0 var(--gutter); width:100%; max-width:1280px; margin:0 auto; }
+    .page-eyebrow { font-family:var(--mono); font-size:.6rem; letter-spacing:.55em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; display:block; }
+    .page-title { font-family:var(--display); font-size:clamp(4rem,9vw,9rem); font-weight:700; line-height:.88; letter-spacing:-.02em; }
+    .page-title em { color:var(--gold); font-style:italic; }
+
+    /* NEWSLETTER HERO */
+    .nl-hero { padding:var(--section-pad) 0; background:var(--dark); text-align:center; position:relative; overflow:hidden; }
+    .nl-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201,168,76,.07), transparent); }
+    .nl-box { max-width:620px; margin:3rem auto 0; position:relative; }
+    .nl-field { display:flex; border:1px solid var(--border); background:var(--glass); backdrop-filter:blur(12px); }
+    .nl-field:focus-within { border-color:var(--gold); }
+    .nl-input { flex:1; background:transparent; border:none; outline:none; padding:1.2rem 1.5rem; color:var(--white); font-family:var(--ui); font-size:.95rem; }
+    .nl-input::placeholder { color:rgba(248,244,238,.25); }
+    .nl-btn { background:var(--gold); color:var(--deep); border:none; padding:1.2rem 2rem; font-family:var(--ui); font-size:.72rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; cursor:none; transition:background .3s; }
+    .nl-btn:hover { background:var(--gold-light); }
+    .nl-perks { display:flex; justify-content:center; gap:2rem; margin-top:2rem; flex-wrap:wrap; }
+    .nl-perk { font-size:.75rem; color:rgba(248,244,238,.4); display:flex; align-items:center; gap:.5rem; }
+
+    /* SOCIAL CHANNELS */
+    .social-section { padding:var(--section-pad) 0; background:var(--deep); }
+    .social-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1px; max-width:1280px; margin:4rem auto 0; padding:0 var(--gutter); }
+    .soc-card { padding:3rem 2rem; background:var(--glass); border:1px solid var(--border); text-align:center; cursor:none; transition:all .4s; text-decoration:none; display:block; }
+    .soc-card:hover { border-color:rgba(201,168,76,.4); transform:translateY(-5px); box-shadow:0 20px 60px rgba(0,0,0,.4); }
+    .soc-icon { font-size:2.5rem; margin-bottom:1rem; display:block; }
+    .soc-name { font-family:var(--display); font-size:1.3rem; font-weight:700; }
+    .soc-handle { font-family:var(--mono); font-size:.52rem; letter-spacing:.25em; color:var(--gold); margin-top:.3rem; }
+    .soc-followers { font-size:.8rem; color:rgba(248,244,238,.4); margin-top:.5rem; }
+
+    /* AMBASSADOR PROGRAM */
+    .ambassador-section { padding:var(--section-pad) 0; background:var(--dark); }
+    .amb-inner { display:grid; grid-template-columns:1fr 1fr; gap:6rem; max-width:1280px; margin:4rem auto 0; padding:0 var(--gutter); align-items:start; }
+    .amb-img { width:100%; aspect-ratio:3/4; object-fit:cover; filter:brightness(.75); }
+    .amb-tiers { display:flex; flex-direction:column; gap:1px; }
+    .amb-tier { padding:2rem 2.5rem; background:var(--glass); border:1px solid var(--border); cursor:none; transition:all .3s; }
+    .amb-tier:hover { border-color:rgba(201,168,76,.4); }
+    .amb-tier-name { font-family:var(--mono); font-size:.58rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); margin-bottom:.5rem; }
+    .amb-tier-title { font-family:var(--display); font-size:1.5rem; font-weight:700; margin-bottom:.5rem; }
+    .amb-tier-desc { font-size:.8rem; color:var(--muted); line-height:1.7; }
+    .amb-tier-reqs { list-style:none; margin-top:1rem; }
+    .amb-tier-reqs li { font-size:.75rem; color:rgba(248,244,238,.5); padding:.3rem 0; display:flex; gap:.6rem; }
+    .amb-tier-reqs li::before { content:'→'; color:var(--gold); flex-shrink:0; }
+
+    /* FAN WALL */
+    .fanwall-section { padding:var(--section-pad) 0; background:var(--deep); }
+    .fanwall-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:2px; max-width:1280px; margin:4rem auto 0; padding:0 var(--gutter); }
+    .fan-post { padding:1.8rem; background:var(--glass); border:1px solid var(--border); position:relative; }
+    .fan-post-header { display:flex; align-items:center; gap:1rem; margin-bottom:1rem; }
+    .fan-avatar { width:44px; height:44px; border-radius:50%; object-fit:cover; border:1px solid var(--border); flex-shrink:0; }
+    .fan-name { font-family:var(--display); font-size:.95rem; font-weight:700; }
+    .fan-location { font-family:var(--mono); font-size:.48rem; letter-spacing:.25em; color:var(--gold); }
+    .fan-text { font-size:.82rem; color:rgba(248,244,238,.65); line-height:1.75; }
+    .fan-img { width:100%; aspect-ratio:4/3; object-fit:cover; margin-top:1rem; filter:brightness(.8); }
+    .fan-post-footer { display:flex; align-items:center; gap:1rem; margin-top:1rem; }
+    .fan-like { font-size:.72rem; color:rgba(248,244,238,.3); display:flex; align-items:center; gap:.4rem; cursor:none; }
+
+    /* CHALLENGES */
+    .challenges-section { padding:var(--section-pad) 0; background:var(--dark); }
+    .chal-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1px; max-width:1280px; margin:4rem auto 0; padding:0 var(--gutter); }
+    .chal-card { padding:2.5rem; background:var(--glass); border:1px solid var(--border); cursor:none; transition:all .3s; }
+    .chal-card:hover { border-color:rgba(201,168,76,.4); }
+    .chal-tag { font-family:var(--mono); font-size:.52rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); margin-bottom:.7rem; }
+    .chal-title { font-family:var(--display); font-size:1.5rem; font-weight:700; margin-bottom:.5rem; }
+    .chal-desc { font-size:.82rem; color:var(--muted); line-height:1.75; margin-bottom:1.2rem; }
+    .chal-count { font-family:var(--mono); font-size:.55rem; letter-spacing:.25em; color:rgba(248,244,238,.3); }
+
+    @media(max-width:1024px) { .amb-inner { grid-template-columns:1fr; } }
+    @media(max-width:768px) { .social-grid { grid-template-columns:repeat(2,1fr); } }
+  </style>
+</head>
+<body>
+<div class="cursor-dot"></div><div class="cursor-circle"></div>
+<div class="noise" aria-hidden="true"></div>
+<div id="scroll-progress"></div>
+<nav class="nav">
+  <a class="nav-logo" href="../index.html">WORLD<span>LIGHT</span></a>
+  <ul class="nav-links">
+    <li><a href="tour.html">Tour</a></li><li><a href="final.html">Final Show</a></li>
+    <li><a href="impact.html">Impact</a></li><li><a href="about.html">About</a></li>
+    <li><a href="press.html">Press</a></li><li><a href="donate.html" class="nav-donate">Donate</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-overlay" id="nav-overlay">
+  <a href="tour.html">Tour</a><a href="final.html">Final Show</a>
+  <a href="impact.html">Impact</a><a href="about.html">About</a>
+  <a href="press.html">Press</a><a href="donate.html">Donate</a>
+</div>
+
+<header class="page-hero">
+  <img class="page-hero-img" src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=1920&q=80&fit=crop" alt="Concert crowd together" fetchpriority="high"/>
+  <div class="page-hero-overlay" aria-hidden="true"></div>
+  <div class="page-hero-content">
+    <span class="page-eyebrow">Join the Movement</span>
+    <h1 class="page-title">We Are <em>One</em></h1>
+  </div>
+</header>
+
+<!-- NEWSLETTER -->
+<section class="nl-hero" aria-label="Newsletter Signup">
+  <div class="container" style="position:relative;">
+    <span class="section-eyebrow reveal" style="display:block;text-align:center;">Stay Connected</span>
+    <h2 class="section-title reveal d1" style="text-align:center;">Join the <em>WorldLight</em> Family</h2>
+    <div class="gold-rule center reveal d2"></div>
+    <p class="section-sub reveal d3" style="text-align:center;margin-left:auto;margin-right:auto;">Tour announcements, exclusive artist interviews, impact stories, and ways to help — straight to your inbox.</p>
+    <form class="nl-box reveal d4" id="newsletter-form" novalidate>
+      <div class="nl-field">
+        <label for="nl-email" style="position:absolute;width:1px;height:1px;overflow:hidden;">Email</label>
+        <input class="nl-input" id="nl-email" type="email" placeholder="your@email.com" required autocomplete="email"/>
+        <button class="nl-btn" type="submit">Join Now</button>
+      </div>
+    </form>
+    <div class="nl-perks reveal d5">
+      <span class="nl-perk">✓ No spam, ever</span>
+      <span class="nl-perk">✓ Unsubscribe anytime</span>
+      <span class="nl-perk">✓ GDPR compliant</span>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL CHANNELS -->
+<section class="social-section" aria-label="Social Media">
+  <div class="container">
+    <header class="section-header-center">
+      <span class="section-eyebrow reveal">Follow Along</span>
+      <h2 class="section-title reveal d1">Find Us <em>Everywhere</em></h2>
+      <div class="gold-rule center reveal d2"></div>
+    </header>
+  </div>
+  <div class="social-grid">
+    <a class="soc-card reveal" href="#" aria-label="Instagram"><span class="soc-icon">📸</span><p class="soc-name">Instagram</p><p class="soc-handle">@worldlighttour</p><p class="soc-followers">2.4M followers</p></a>
+    <a class="soc-card reveal d1" href="#" aria-label="TikTok"><span class="soc-icon">♪</span><p class="soc-name">TikTok</p><p class="soc-handle">@worldlight</p><p class="soc-followers">5.1M followers</p></a>
+    <a class="soc-card reveal d2" href="#" aria-label="YouTube"><span class="soc-icon">▶</span><p class="soc-name">YouTube</p><p class="soc-handle">WorldLight Tour</p><p class="soc-followers">1.8M subscribers</p></a>
+    <a class="soc-card reveal d3" href="#" aria-label="Twitter/X"><span class="soc-icon">✕</span><p class="soc-name">X / Twitter</p><p class="soc-handle">@WorldLightTour</p><p class="soc-followers">890K followers</p></a>
+    <a class="soc-card reveal d4" href="#" aria-label="Spotify"><span class="soc-icon">♫</span><p class="soc-name">Spotify</p><p class="soc-handle">WorldLight Playlist</p><p class="soc-followers">620K listeners</p></a>
+    <a class="soc-card reveal d5" href="#" aria-label="Facebook"><span class="soc-icon">f</span><p class="soc-name">Facebook</p><p class="soc-handle">WorldLight Tour</p><p class="soc-followers">1.2M followers</p></a>
+  </div>
+</section>
+
+<!-- AMBASSADOR PROGRAM -->
+<section class="ambassador-section" aria-label="Ambassador Program">
+  <div class="container">
+    <header class="section-header-center">
+      <span class="section-eyebrow reveal">Become a Voice</span>
+      <h2 class="section-title reveal d1">Ambassador <em>Program</em></h2>
+      <div class="gold-rule center reveal d2"></div>
+      <p class="section-sub reveal d3">Spread the WorldLight mission in your community. Three tiers — from local advocate to global ambassador.</p>
+    </header>
+  </div>
+  <div class="amb-inner">
+    <div class="reveal-l">
+      <img class="amb-img" src="https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?w=700&q=75&fit=crop" alt="Community gathering" loading="lazy"/>
+    </div>
+    <div class="amb-tiers reveal-r">
+      <div class="amb-tier">
+        <p class="amb-tier-name">Tier 1</p>
+        <h3 class="amb-tier-title">Community Advocate</h3>
+        <p class="amb-tier-desc">Share WorldLight in your local community, school or workplace. Host a viewing party for the global livestream.</p>
+        <ul class="amb-tier-reqs">
+          <li>Sign up via newsletter</li>
+          <li>Share on social media</li>
+          <li>Receive exclusive Ambassador Kit</li>
+        </ul>
+      </div>
+      <div class="amb-tier">
+        <p class="amb-tier-name">Tier 2</p>
+        <h3 class="amb-tier-title">City Champion</h3>
+        <p class="amb-tier-desc">Organise local events, coordinate volunteer groups, and help promote WorldLight shows in your city.</p>
+        <ul class="amb-tier-reqs">
+          <li>Minimum 3 community events</li>
+          <li>100+ people reached locally</li>
+          <li>VIP access to your city's show</li>
+        </ul>
+      </div>
+      <div class="amb-tier">
+        <p class="amb-tier-name">Tier 3</p>
+        <h3 class="amb-tier-title">Global Ambassador</h3>
+        <p class="amb-tier-desc">Represent WorldLight at international level. Appear on stage, give speeches and attend the Grand Finale as an official delegate.</p>
+        <ul class="amb-tier-reqs">
+          <li>Application &amp; selection by committee</li>
+          <li>10,000+ people reached</li>
+          <li>Attendance at Grand Finale</li>
+          <li>Official title &amp; credentials</li>
+        </ul>
+      </div>
+      <a href="donate.html" class="btn btn-gold" style="margin-top:1px;">Apply as Ambassador →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAN WALL -->
+<section class="fanwall-section" aria-label="Fan Wall">
+  <div class="container">
+    <header class="section-header-center">
+      <span class="section-eyebrow reveal">Your Stories</span>
+      <h2 class="section-title reveal d1">The <em>Fan Wall</em></h2>
+      <div class="gold-rule center reveal d2"></div>
+      <p class="section-sub reveal d3">Real messages from the WorldLight community — from every corner of the world.</p>
+    </header>
+  </div>
+  <div class="fanwall-grid">
+    <div class="fan-post reveal">
+      <div class="fan-post-header">
+        <img class="fan-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=70&fit=crop&crop=face" alt="Fan" loading="lazy"/>
+        <div><p class="fan-name">Sophie Laurent</p><p class="fan-location">Paris, France</p></div>
+      </div>
+      <p class="fan-text">"I cried from the first note to the last. WorldLight Paris was the most beautiful, powerful thing I have ever witnessed. I donated my birthday money. It felt right."</p>
+      <div class="fan-post-footer"><span class="fan-like">♡ 2,847</span><span class="fan-like" style="margin-left:auto;font-family:var(--mono);font-size:.48rem;letter-spacing:.2em;color:rgba(248,244,238,.2);">MAR 22, 2025</span></div>
+    </div>
+    <div class="fan-post reveal d1">
+      <div class="fan-post-header">
+        <img class="fan-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=70&fit=crop&crop=face" alt="Fan" loading="lazy"/>
+        <div><p class="fan-name">Daniel Osei</p><p class="fan-location">Accra, Ghana</p></div>
+      </div>
+      <p class="fan-text">"To see an international show of this magnitude come to West Africa — not as charity, but as celebration — it changed something in me. I volunteered for 3 days and it was the best decision of my life."</p>
+      <img class="fan-img" src="https://images.unsplash.com/photo-1568213214834-c0c2e5ab1e1d?w=400&q=60&fit=crop" alt="Fan photo from show" loading="lazy"/>
+      <div class="fan-post-footer"><span class="fan-like">♡ 1,923</span></div>
+    </div>
+    <div class="fan-post reveal d2">
+      <div class="fan-post-header">
+        <img class="fan-avatar" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&q=70&fit=crop&crop=face" alt="Fan" loading="lazy"/>
+        <div><p class="fan-name">Mia Johansson</p><p class="fan-location">Stockholm, Sweden</p></div>
+      </div>
+      <p class="fan-text">"I watched the Berlin show livestream with 40 friends in my living room. We raised €800 that night just from passing a jar. This movement is real."</p>
+      <div class="fan-post-footer"><span class="fan-like">♡ 4,112</span></div>
+    </div>
+    <div class="fan-post reveal d3">
+      <div class="fan-post-header">
+        <img class="fan-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=70&fit=crop&crop=face" alt="Fan" loading="lazy"/>
+        <div><p class="fan-name">Yuki Tanaka</p><p class="fan-location">Tokyo, Japan</p></div>
+      </div>
+      <p class="fan-text">"Already have my ticket for Tokyo. I've been following WorldLight since they announced it. The way they centre local artists alongside global names — this is how it should always be done."</p>
+      <div class="fan-post-footer"><span class="fan-like">♡ 3,560</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHALLENGES -->
+<section class="challenges-section" aria-label="Community Challenges">
+  <div class="container">
+    <header class="section-header-center">
+      <span class="section-eyebrow reveal">Get Involved</span>
+      <h2 class="section-title reveal d1">Community <em>Challenges</em></h2>
+      <div class="gold-rule center reveal d2"></div>
+    </header>
+  </div>
+  <div class="chal-grid">
+    <div class="chal-card reveal"><p class="chal-tag">#WorldLightVoice</p><h3 class="chal-title">Sing Your Hope</h3><p class="chal-desc">Record a 60-second video of yourself singing any song that gives you hope. Tag #WorldLightVoice and inspire others.</p><p class="chal-count">284,000 submissions</p></div>
+    <div class="chal-card reveal d1"><p class="chal-tag">#LightForChildren</p><h3 class="chal-title">Light a Candle</h3><p class="chal-desc">Post a photo of a candle in your window on tour nights. Every flame represents a child we're fighting for.</p><p class="chal-count">1.2M photos shared</p></div>
+    <div class="chal-card reveal d2"><p class="chal-tag">#DonateAShow</p><h3 class="chal-title">Donate Your Ticket Price</h3><p class="chal-desc">If you can't attend a show, donate what a ticket would have cost. Every amount goes directly to the WorldLight fund.</p><p class="chal-count">$4.8M raised through challenge</p></div>
+  </div>
+</section>
+
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <div><p class="footer-brand-name">WORLDLIGHT TOUR</p><p class="footer-brand-desc">The world's greatest humanitarian music movement.</p></div>
+    <div><p class="footer-col-label">Tour</p><ul class="footer-nav"><li><a href="tour.html">All Dates</a></li><li><a href="final.html">Final Show</a></li></ul></div>
+    <div><p class="footer-col-label">Org</p><ul class="footer-nav"><li><a href="about.html">About</a></li><li><a href="impact.html">Impact</a></li><li><a href="donate.html">Donate</a></li></ul></div>
+    <div><p class="footer-col-label">Legal</p><ul class="footer-nav"><li><a href="legal.html">Privacy</a></li><li><a href="legal.html">Terms</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p class="footer-copy">© 2025 WorldLight Tour. All rights reserved.</p></div>
+</footer>
+<script src="../js/main.js"></script>
+</body>
+</html>
